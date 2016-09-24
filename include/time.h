@@ -57,8 +57,11 @@ class time
 
   virtual void initTime() {};
 
-  virtual unsigned long getTime(bool scale) {};
-  virtual unsigned long getElapsedTime(bool scale) {};
+
+
+  virtual unsigned long getTime(bool scale) { return 0; };
+
+  virtual unsigned long getElapsedTime(bool scale) { return 0;  };
 
 };
 

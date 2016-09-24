@@ -59,7 +59,7 @@ class NSF
     chunkcmprHeader chunks_compressed[MAX_CHUNKS];
     chunk chunks[MAX_CHUNKS];
     
-    chunk *textureChunks[MAX_TEXTURECHUNKS];
+	chunk **textureChunks = NULL;
     
     entry *entries[MAX_TYPES][MAX_ENTRIES*3];
     unsigned long entryCount[MAX_TYPES];

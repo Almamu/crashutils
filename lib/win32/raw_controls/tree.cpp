@@ -358,6 +358,8 @@ TVITEM HandleRClick(HWND treeView)
   HTREEITEM selected = (HTREEITEM)SendMessage(treeView, TVM_GETNEXTITEM, TVGN_DROPHILITE, 0);
       
   TVITEM item;
+  memset(&item, 0, sizeof(TVITEM));
+
   if (selected != NULL)
   {    
     SendMessage(treeView, TVM_SELECTITEM, TVGN_CARET, (LPARAM)selected);

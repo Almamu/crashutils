@@ -7,7 +7,6 @@
 #include "graphics/render_manager.h"
 #include "graphics/context.h"
 
-#include "context-plugins/context_config.h"
 #include "context-plugins/editor.h"
 
 class context_editor : public context_plugin_editor

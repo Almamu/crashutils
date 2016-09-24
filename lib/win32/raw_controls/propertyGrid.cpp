@@ -98,7 +98,7 @@
 /// @param right The right coordinate.
 /// @param bottom The bottom coordinate.
 #define MAKE_RECT(left, top, right, bottom) \
-    ((RECT) { (left), (top), (right), (bottom) })
+    { (left), (top), (right), (bottom) }
 
 /// @def ListBox_ItemFromPoint(hwndCtl, xPos, yPos)
 ///
@@ -1798,7 +1798,7 @@ static char* FileDialogItem_ToString(LPPROPGRIDFDITEM lpPgFdItem)
 /// @returns LPITEMIDLIST A pointer to an item id list object.
 static LPITEMIDLIST ConvertPathToLpItemIdList(char* pszPath)
 {
-    LPITEMIDLIST pidl;
+    LPITEMIDLIST pidl = NULL;
     LPSHELLFOLDER pDesktopFolder;
     ULONG chEaten;
     ULONG dwAttributes;

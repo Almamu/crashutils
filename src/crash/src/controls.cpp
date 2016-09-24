@@ -1,4 +1,4 @@
-#include "control.h"
+#include "controls.h"
 
 #include "../crash_system.h"
 

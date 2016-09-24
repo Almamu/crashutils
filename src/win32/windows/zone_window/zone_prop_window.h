@@ -32,6 +32,8 @@ class zone_prop_window : public basic_control
         default: onExternal((int)uMsg, lparam, rparam); break;
       }
     } 
+
+	return NULL;
   }
   
   virtual void select() 

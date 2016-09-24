@@ -1,3 +1,5 @@
+#include "context_plugin.h"
+
 typedef struct
 {
   void *field;
@@ -158,4 +160,4 @@ class context_plugin_shared : public context_plugin
        
     return false;
   }
-}
+};

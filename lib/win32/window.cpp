@@ -56,6 +56,8 @@ window *window::addChild(window *child)
   child->hInstance = hInstance;
   child->hParent   = hSelf;
   child->parent    = this;  
+
+  return NULL;
 }
 
 window *window::getChild(int index)

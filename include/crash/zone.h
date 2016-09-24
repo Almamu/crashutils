@@ -75,7 +75,7 @@ typedef struct
     unsigned short maxDepthY;
     unsigned short maxDepthZ;
     unsigned short nodes[];
-  } collision[];
+  } *collision;
 } crash_zone_dimensions;
 
 typedef struct

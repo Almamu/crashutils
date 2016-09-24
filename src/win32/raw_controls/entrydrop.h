@@ -23,7 +23,7 @@ class entryDrop : public drop
   public:
   
   entryDrop(int listID, int listType, int x, int y, int w, int h, HWND parent);
-  int setNSFNSD(NSF *newNSF, NSD *newNSD) { nsf = newNSF; nsd = newNSD; }
+  int setNSFNSD(NSF *newNSF, NSD *newNSD) { nsf = newNSF; nsd = newNSD; return 0;  }
   
   int lookupAddEntry(unsigned long EID);
   void occupy();

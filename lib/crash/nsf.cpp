@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -40,6 +41,12 @@ unsigned char *NSF::readChunkData()
 
   while (bufferPos < buffersize)
   {
+	  if (countChunks > MAX_CHUNKS)
+	  {
+		  OutputDebugString("Maximum chunks count reached. Continuing...");
+		  continue;
+	  }
+
     unsigned short magic = getHword(buffer, bufferPos, true);
   
     //chunkData[countChunks] = (unsigned char*)malloc(CHUNKSIZE);
@@ -66,6 +73,8 @@ unsigned char *NSF::readChunkData()
 
     countChunks++;
   }
+
+  return NULL;
 }
 
 long decompressChunk(unsigned char *output, const unsigned char *input, chunkcmprHeader header)
@@ -207,6 +216,11 @@ void NSF::readChunks(const char *file)
   loadNSF(file);
   readChunkData();
   unloadNSF();
+
+  if (textureChunks == NULL)
+  {
+	  textureChunks = (chunk**) malloc(sizeof(chunk*) * MAX_TEXTURECHUNKS);
+  }
 
   for (int count=0; count < countChunks; count++)
   {

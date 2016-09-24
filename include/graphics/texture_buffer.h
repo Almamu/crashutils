@@ -1,6 +1,7 @@
 #ifndef TEXTURE_BUFFER_H
 #define TEXTURE_BUFFER_H
 
+#include <string.h>
 #include "types.h"
 
 #include "../crash/nsd.h"
@@ -109,7 +110,7 @@ class texture_buffer
   // with given corners at the 4 respective points in memory (i.e. in vram)
 	virtual void init() {};
 	virtual void storeBlock(unsigned long *pixBuf, int x, int y, int w, int h) {};
-	virtual fquad2 getBlockCoords(point A, point B, point C, point D) {};
+	virtual fquad2 getBlockCoords(point A, point B, point C, point D) { fquad2 i; memset(&i, 0, sizeof(fquad2)); return i; };
 	
 	void resetTextures();
 	void initTextureCache();

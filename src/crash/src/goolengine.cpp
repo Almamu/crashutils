@@ -5,7 +5,7 @@ using namespace std;
 #include "objectengine.h"    //for definition of the extern cmove struct used by the controller routine
 #include "zoneengine.h"      //for instruction that uses findZone
 #include "matrix.h"
-#include "control.h"         //for controller struct definitions so we can read the controls
+#include "controls.h"         //for controller struct definitions so we can read the controls
 
 #include "../crash_system.h"         //so the gool interpreter can suspend
 
@@ -161,6 +161,8 @@ unsigned long loadStates(unsigned short levelID)
       states[stateIndex] |= 8;
     }
   }
+
+  return 0;
 }
 
 //**FROM HIGHEST/OLDEST GENERATION TO LOWEST/YOUNGEST GENERATION                                                  
@@ -787,7 +789,7 @@ object *addObject(object *parent, unsigned long levelListIndex, unsigned long su
 
 bool terminateObject(object *obj)
 {
-  terminateObject(obj, true);
+  return terminateObject(obj, true);
 }
 
 bool terminateObject(object *obj, bool termEvent) 
@@ -1555,7 +1557,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
       goolDisasm gd;
       unsigned long offset = 3;
       unsigned long length = 7;
-      char lines[length][80];
+      char lines[7][80];
       
       unsigned long codeStart = (unsigned long)obj->global->itemData[1];
       unsigned char *codeCur = (unsigned char *)(obj->process.pc - offset);

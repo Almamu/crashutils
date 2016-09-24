@@ -3,7 +3,7 @@
 #include "zoneengine.h"
 #include "objectengine.h"
 
-#include "control.h"
+#include "controls.h"
 
 #include "../crash_system.h"
 

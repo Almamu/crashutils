@@ -1,4 +1,5 @@
 #include "comp_geom.h"
+#include <Windows.h>
 
 void comp_geom::getVolumeVertices3d(fvolume *in, fpoint (&rect3d)[8])
 {
@@ -26,8 +27,9 @@ void comp_geom::getVolumeVertices3d(fvolume *in, dpoint (&rect3d)[8])
 
 void comp_geom::projectOutline2d(context *ctxt, dpoint *in, int inCount, dpoint *out, int &outCount)
 {
-  dpoint poly2d[inCount];
-  
+	dpoint* poly2d = (dpoint*)calloc(inCount, sizeof(dpoint));
+	memset(poly2d, 0, sizeof(dpoint) * inCount);
+
   // project all 3d points on the poly to 2d
   for (int lp=0; lp<inCount; lp++)
     poly2d[lp] = ctxt->project2d(in[lp].X, in[lp].Y, in[lp].Z);
@@ -54,30 +56,28 @@ void comp_geom::projectOutline2d(context *ctxt, dpoint *in, int inCount, dpoint 
     convexHull2d(poly2d, inCount, out, outCount); 
   else
     outCount = 0;
+
+  free(poly2d);
 }
 
 void comp_geom::convexHull2d(dpoint *in, int inCount, dpoint *out, int &outCount)
 {
-  // sort points  
-  for (int lp2=inCount; lp2>=0; lp2--)
-  {
-    for (int lp=0; lp<lp2; lp++)
-    {
-      double X1 = in[lp].X;
-      double Y1 = in[lp].Y;
-      double X2 = in[lp+1].X;
-      double Y2 = in[lp+1].Y;
-     
-      if (X1 > X2 ||
-          (X1 == X2 && Y1 > Y2))
-      {
-        in[lp].X = X2;
-        in[lp].Y = Y2;
-        in[lp+1].X = X1;
-        in[lp+1].Y = Y1;
-      }        
-    }
-  }
+	// sort the points first
+	for (int i = 0; i < inCount - 1; i++)
+	{
+		double X1 = in[i].X;
+		double Y1 = in[i].Y;
+		double X2 = in[i + 1].X;
+		double Y2 = in[i + 1].Y;
+
+		if (X1 > X2 || (X1 == X2 && Y1 > Y2))
+		{
+			in[i].X = X2;
+			in[i].Y = Y2;
+			in[i + 1].X = X1;
+			in[i + 1].Y = Y1;
+		}
+	}
 
       
   int k=0;
@@ -92,7 +92,10 @@ void comp_geom::convexHull2d(dpoint *in, int inCount, dpoint *out, int &outCount
           * (   in[i].X - in[k-2].X))
            <= 0) 
       k--;
-    out[k++] = in[i];
+
+	if (k >= inCount) continue;
+    
+	out[k++] = in[i];
   }
 
   // Build upper hull
@@ -105,9 +108,11 @@ void comp_geom::convexHull2d(dpoint *in, int inCount, dpoint *out, int &outCount
           * (   in[i].X - out[k-2].X))
            <= 0) 
       k--;
+	if (k >= inCount) continue;
+
     out[k++] = in[i];
   }
-  
+
   outCount = k;
 }
 

@@ -22,11 +22,12 @@ class context_plugin
 {
   friend class context;
 	friend class render_manager;
+  public:
+	context_plugin *parent;
   protected:
  
   context *parentContext;
   
-  context_plugin *parent;
   context_plugin *sibling;
   context_plugin *children;
   

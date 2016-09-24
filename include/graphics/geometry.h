@@ -16,6 +16,8 @@
 #include "model_msc.h"
 #include "texture_buffer.h"
 
+#define MAX_OBJECT_FRAMES 128
+
 template <typename T, typename U>
 struct g_dataCacheEntry
 {
@@ -34,7 +36,7 @@ template <typename T>
 struct g_itemCacheEntry
 {
   unsigned long EID;
-  T *object[32];
+  T *object[MAX_OBJECT_FRAMES];
 };
 
 class geometry

@@ -34,14 +34,16 @@ class context_win : public basic_control
   {
     if (createCallback)
       (*createCallback)();
+
+	return NULL;
   }
-  virtual LRESULT onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam) {};
-  virtual LRESULT onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam) {};
-  virtual LRESULT onPaint(UINT uMsg, WPARAM wParam, LPARAM lParam) {};
+  virtual LRESULT onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam) { return NULL; };
+  virtual LRESULT onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam) { return NULL; };
+  virtual LRESULT onPaint(UINT uMsg, WPARAM wParam, LPARAM lParam) { return NULL; };
   virtual LRESULT onClick(UINT uMsg, WPARAM wParam, LPARAM lParam);
-  virtual LRESULT onRClick(UINT uMsg, WPARAM wParam, LPARAM lParam) {};
-  virtual LRESULT onMouse(UINT uMsg, WPARAM wParam, LPARAM lParam) {};  
-  virtual LRESULT onDestroy(UINT uMsg, WPARAM waram, LPARAM lParam) {};
+  virtual LRESULT onRClick(UINT uMsg, WPARAM wParam, LPARAM lParam) { return NULL; };
+  virtual LRESULT onMouse(UINT uMsg, WPARAM wParam, LPARAM lParam) { return NULL; };
+  virtual LRESULT onDestroy(UINT uMsg, WPARAM waram, LPARAM lParam) { return NULL; };
 };
 
 #endif

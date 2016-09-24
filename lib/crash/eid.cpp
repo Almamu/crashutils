@@ -12,15 +12,11 @@ char alphaTable[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 
 void getEIDstring(char* _EIDstring, long EID)
 {
-  int shift = 1;                            //shift the string type bit/flag out
-
-  for (int lp = 0; lp < 5; lp++)
-  {
-    int charIndex  = (EID >> shift) & 0x3F;
-    _EIDstring[4 - lp] = alphaTable[charIndex];      
-    shift += 6;
-  }
-
+  _EIDstring[4] = alphaTable[(EID >> 1) & 0x3f];
+  _EIDstring[3] = alphaTable[(EID >> 7) & 0x3f];
+  _EIDstring[2] = alphaTable[(EID >> 13) & 0x3f];
+  _EIDstring[1] = alphaTable[(EID >> 19) & 0x3f];
+  _EIDstring[0] = alphaTable[(EID >> 25) & 0x3f];
   _EIDstring[5] = '\0'; 
     
 }

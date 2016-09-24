@@ -15,6 +15,9 @@ LRESULT entity_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
   
   static_subtype = createText(0, rcClient.right-140, 50, 120, 30, "");
   static_group   = createText(0, rcClient.right-140, 80, 120, 30, "");
+
+
+  return NULL;
 }
 
 void entity_window::onExternal(int msg, param lparam, param rparam)

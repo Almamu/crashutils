@@ -42,6 +42,8 @@ unsigned long control::readControls()
 bool control::toggleActive()
 {
   active = !active;
+
+  return active;
 }
 
 bool control::isActive()

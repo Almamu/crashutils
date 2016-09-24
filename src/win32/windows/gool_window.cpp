@@ -31,6 +31,9 @@ LRESULT gool_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	functionList->addProperty("Sub B", 0xC, PROPERTY_HWORD, PROPERTY_GOOLOFFSET);
 	functionList->setLength(0x10);
 	functionList->initColumns();
+
+
+	return NULL;
 }
  
 LRESULT gool_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -44,6 +47,8 @@ LRESULT gool_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
     }
     break; 
   }
+
+  return NULL;
 }
 
 LRESULT gool_window::onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -54,12 +59,16 @@ LRESULT gool_window::onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam)
   else if (subIDlist->handle(lParam) == LIST_RCLICK)
   {
   }
+
+  return NULL;
 }
 
 LRESULT gool_window::onPaint(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   codeEdit->paint();
   codeData->paint();
+
+  return NULL;
 }
 
 LRESULT gool_window::onOther(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -91,6 +100,8 @@ LRESULT gool_window::onOther(UINT uMsg, WPARAM wParam, LPARAM lParam)
       }
     }
   }
+
+  return NULL;
 }
     
 void gool_window::onSelectGool(entry *gool)

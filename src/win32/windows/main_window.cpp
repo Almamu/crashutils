@@ -56,6 +56,9 @@ LRESULT main_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
     SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIconSm);
   else
     MessageBox(hwnd, "Could not load small icon!", "Error", MB_OK | MB_ICONERROR);*/
+
+
+  return NULL;
 }
 
 LRESULT main_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -226,4 +229,7 @@ LRESULT main_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
 LRESULT main_window::onDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   PostQuitMessage(0);	
+
+
+  return NULL;
 }

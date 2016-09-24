@@ -13,6 +13,9 @@ LRESULT main_window_com::onOther(UINT uMsg, WPARAM wParam, LPARAM lParam)
       parentSystem->postMessage((int)uMsg, lparam, rparam, true);
     }
   }
+
+
+  return NULL;
 }
 
 void win_system::messageRouter(csystem *src, int msg, param lparam, param rparam)

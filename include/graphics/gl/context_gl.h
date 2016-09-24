@@ -17,7 +17,7 @@ class context_gl : public context
   virtual void render() {};
   virtual void draw();
   virtual void update() {};
-  virtual bool setActive() {};
+  virtual bool setActive() { return true; };
   
   void setProjection(int mode);
   void setViewport(int width, int height);

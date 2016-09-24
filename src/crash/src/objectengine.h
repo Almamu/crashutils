@@ -4,11 +4,11 @@
 #include "goolengine.h"
 #include "zoneengine.h"    //for finding zones
 #include "matrix.h"        //for matrix transformations
-#include "control.h"
+#include "controls.h"
 
 #include "crash/r3000a.h"
 
-#define PI 3.14159265d
+#define PI 3.14159265
 
 #define CTCVC(C) (C << 8)
 #define CTGVC(C) (C >> 8)

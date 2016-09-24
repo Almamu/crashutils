@@ -15,7 +15,10 @@ LRESULT model_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
   zone_window *zoneWindow = new zone_window;
   addChild(zoneWindow);
   zoneWindow->create(WS_EX_CLIENTEDGE, 640, 0, 640, rcClient.bottom, IDC_ZONEWINDOW);  
-}    
+
+
+  return NULL;
+}
   
 void model_window::onLoadLevel()
 {

@@ -1,4 +1,5 @@
 #include <math.h>
+#include <string.h>
 
 #include "graphics/md3/model_obj_md3.h"
 
@@ -15,11 +16,16 @@ void model_obj_md3::exportMD3(entry *svtx, texture_buffer_md3 *texbuf, prim_allo
   loadPolygons(tgeo, texbuf, prims);
   
   md3_header header;
-  md3_frame frames[frameCount];
+  md3_frame* frames = (md3_frame*) calloc(frameCount, sizeof(md3_frame));
   md3_surface surface;  
-  md3_triangle md3_triangles[polyCount];
-  md3_texcoord md3_texcoords[vertCount];
-  md3_vertex md3_vertices[frameCount][vertCount];
+  md3_triangle* md3_triangles = (md3_triangle*)calloc(polyCount, sizeof(md3_triangle));
+  md3_texcoord* md3_texcoords = (md3_texcoord*)calloc(vertCount, sizeof(md3_texcoord));
+  md3_vertex** md3_vertices = (md3_vertex**)calloc(frameCount * vertCount, sizeof(md3_vertex));
+
+  memset(frames, 0, frameCount * sizeof(md3_frame));
+  memset(frames, 0, polyCount * sizeof(md3_triangle));
+  memset(frames, 0, vertCount * sizeof(md3_texcoord));
+  memset(frames, 0, frameCount * vertCount * sizeof(md3_vertex));
 
   sprintf(header.ident, "IDP3");
   header.version = 15;
@@ -143,6 +149,11 @@ void model_obj_md3::exportMD3(entry *svtx, texture_buffer_md3 *texbuf, prim_allo
   filename[it+3] = 'a';
   filename[it+4] = 0;
   texbuf->exportTGA((const char*)filename);
+
+  free(frames);
+  free(md3_triangles);
+  free(md3_texcoords);
+  free(md3_vertices);
 
 }
 

@@ -7,15 +7,15 @@
 #include "win32/raw_controls/textedit.h"
 #include "../raw_controls/objectlist.h"
 #include "win32/raw_controls/propertyGrid.h"
-#include "../raw_controls/list.h"
+#include "win32/raw_controls/list.h"
 
-#include "../../formats/crash/nsd.h"
-#include "../../formats/crash/nsf.h"
-#include "../../formats/crash/entry.h"
-#include "../../formats/crash/eid.h"
-#include "../../formats/crash/r3000a.h"
+#include "formats/crash/nsd.h"
+#include "formats/crash/nsf.h"
+#include "formats/crash/entry.h"
+#include "formats/crash/eid.h"
+#include "formats/crash/r3000a.h"
 
-#include "../../crash/src/goolengine.h"
+#include "crash/src/goolengine.h"
 //#include "../../crash/threads.h"       //so the gool interpreter can be resumed
 
 #define IDC_OBJPROPS   101

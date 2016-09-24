@@ -57,6 +57,9 @@ LRESULT zone_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
   entityWindow->ShowWindow(SW_HIDE);
   shaderWindow->ShowWindow(SW_HIDE);
   cameraPathWindow->ShowWindow(SW_HIDE);
+
+
+  return NULL;
 }
 
 LRESULT zone_window::onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -117,6 +120,9 @@ LRESULT zone_window::onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam)
     else if (selectType == ZONELIST_RCLICK)
       mouseMenu(hEntityMenu);
   }
+
+
+  return NULL;
 }
 
 LRESULT zone_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -138,6 +144,9 @@ LRESULT zone_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
       BroadcastMessageRoot(CSM_SPAWN_USER_OBJECT, (WPARAM)0, (LPARAM)paramsB);
     }
   }
+
+
+  return NULL;
 }
 
 LRESULT zone_window::onOther(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -153,6 +162,9 @@ LRESULT zone_window::onOther(UINT uMsg, WPARAM wParam, LPARAM lParam)
       case MSG_SELECT_ZONE: onSelectZone((entry*)lparam); break;
     }
   }
+
+
+  return NULL;
 }
 
 void zone_window::onSelectZone(entry *zone)

@@ -49,6 +49,9 @@ LRESULT general_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
                         "Does not save checkpoint state");
 
   createGroupBox(0, 20, 180, 360, 160, "Statistics");
+
+
+  return NULL;
 }
 
 void general_window::onExternal(int msg, param lparam, param rparam)

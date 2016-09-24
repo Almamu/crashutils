@@ -36,6 +36,8 @@ LPARAM colorbox::onPaint(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	EndPaint(hSelf, &ps);
   
   DeleteObject(backColor);
+
+  return NULL;
 }
 
 LPARAM colorbox::onClick(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -43,6 +45,8 @@ LPARAM colorbox::onClick(UINT uMsg, WPARAM wParam, LPARAM lParam)
   chooseColor();
   
   InvalidateRect(hSelf, NULL, true);
+
+  return NULL;
 }
 
 void colorbox::chooseColor()

@@ -1,0 +1,7 @@
+vs2015/*/Debug
+vs2015/*/*/Debug
+vs2015/*/*/*/Debug
+vs2015/*/*/*/*/Debug
+vs2015/*/*/*/*/*/Debug
+*.sdf
+*.opendb

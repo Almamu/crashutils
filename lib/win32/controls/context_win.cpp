@@ -69,10 +69,12 @@ bool context_win::opengl()
 
 void context_win::SwapBuffers()
 {
-  ::SwapBuffers(hDC);
+	if(hDC) ::SwapBuffers(hDC);
 }
 
 LRESULT context_win::onClick(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   SetFocus();
+
+  return NULL;
 }

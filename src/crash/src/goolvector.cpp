@@ -1,9 +1,12 @@
+#include "goolengine.h"
+#include "objectengine.h"
+
 void collisionVectors(cvector *vectA, cvector *vectB)
 {
   if ((vectB->X == 0) &&
       (vectB->Y == 0) &&
       (vectB->Z == 0))
-    return 0;
+    return;
   
   unsigned char *currentZoneHeader = currentZone->itemData[0];
   
@@ -58,11 +61,11 @@ void collisionVectors(cvector *vectA, cvector *vectB)
         }
       } while (count < neighborCount);
       
-      if (count == neighborCount) { return true; }
+      if (count == neighborCount) { return; }
     }
   } while (!retval);
 
-  return retval;
+  return;
 }  
 
 void findNode(unsigned char *zoneCollisions, unsigned short node, cspace zoneSpace, cvector *vectA, cvector *vectB, unsigned short level)
@@ -77,7 +80,7 @@ void findNode(unsigned char *zoneCollisions, unsigned short node, cspace zoneSpa
   {
     // if the node is a non-leaf node
     if (node & 0xFFFF)
-      childNodes = &zoneCollisions[node & 0xFFFF]; //it can be subdivided into its children
+      childNodes = (unsigned short*) &zoneCollisions[node & 0xFFFF]; //it can be subdivided into its children
     else
       childNodes = 0;                              //else it can be subdivided no further
   }  
@@ -87,6 +90,8 @@ void findNode(unsigned char *zoneCollisions, unsigned short node, cspace zoneSpa
   {
     // we'd like to determine the dimensions of its child nodes
     cspace childSpace;
+
+	memset(&childSpace, 0, sizeof(cspace));
 
     // firstly, we'd like to determine the width, height, and depth
 
@@ -154,18 +159,17 @@ void findNode(unsigned char *zoneCollisions, unsigned short node, cspace zoneSpa
               ((childSpace.Y + childSpace.H) > vectA->Y) &&
               ((childSpace.Z + childSpace.D) > vectA->Z))
           {
-            unsigned long childNode = childNodes[count];
+            unsigned long childNode = childNodes[child];
             
-            unsigned long retval = findNode(zoneCollisions, childNode, childSpace, vectA, vectB, level+1);
-            if (retval != 0) { return retval; }
-          }
+            findNode(zoneCollisions, childNode, childSpace, vectA, vectB, level+1);
+		  }
           
           child++;
         } while (++countZ < 2);
       } while (++countY < 2);        
     } while (++countX < 2);
     
-    return 0; //retval;
+    return; //retval;
   }
   // else the given node is an empty node 
   // (i.e. refers to an non-occupied, non-solid, empty region of space)
@@ -209,19 +213,19 @@ void findNode(unsigned char *zoneCollisions, unsigned short node, cspace zoneSpa
     // separate respective axis
     
     if (vectB->X <= 0)                    //if negative in the x direction
-      xval = zoneSpace->X;                //we may hit the left of the node
+      xval = zoneSpace.X;                //we may hit the left of the node
     else                                  //else if positive 
-      xval = zoneSpace->X + zoneSpace->W; //we may hit the right of the node
+      xval = zoneSpace.X + zoneSpace.W; //we may hit the right of the node
       
     if (vectB->Y <= 0)                    //if negative in the y direction
-      yval = zoneSpace->Y;                //we may hit the top of the node
+      yval = zoneSpace.Y;                //we may hit the top of the node
     else                                  //else if positive 
-      yval = zoneSpace->Y + zoneSpace->H; //we may hit the bottom of the node
+      yval = zoneSpace.Y + zoneSpace.H; //we may hit the bottom of the node
       
     if (vectB->Z <= 0)                    //if negative in the z direction
-      zval = zoneSpace->Z;                //we may hit the back of the node
+      zval = zoneSpace.Z;                //we may hit the back of the node
     else                                  //else if positive 
-      zval = zoneSpace->Z + zoneSpace->D; //we may hit the front of the node
+      zval = zoneSpace.Z + zoneSpace.D; //we may hit the front of the node
       
     // note that, given the offsets in the respective axes of
     // each face, we have the respective equations of their 
@@ -301,7 +305,7 @@ void findNode(unsigned char *zoneCollisions, unsigned short node, cspace zoneSpa
     vectA->Y += CTGVC(min * vectB->Y);
     vectA->Z += CTGVC(min * vectB->Z);
     
-    return 0;
+    return;
   }
   // else the node is a leaf node, so we use its value
   else

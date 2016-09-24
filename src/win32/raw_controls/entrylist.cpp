@@ -113,7 +113,7 @@ int entryList::occupy()
             char curEIDString[6];
             getEIDstring(curEIDString, curEID);
       
-            char curlistEntryString[20];
+            char curlistEntryString[28];
             sprintf(curlistEntryString, "Entry: %s  CID: %x", curEIDString, curCID);
       
           //TODO: implement index, parent, and handle so the nsd lists can also be used
@@ -124,6 +124,8 @@ int entryList::occupy()
     }
 	  break;	
   }
+
+  return 0;
 }  
 	
 int entryList::handle(LPARAM lParam)

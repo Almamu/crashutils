@@ -3,7 +3,7 @@
 
 #define GL_VERTEX_ARRAY_ENABLE
 
-#define PI 3.14159265d
+#define PI 3.14159265
 #define MAX_POLYGONS   0X1000
 #define MAX_QUADS      0X200
 #define MAX_VERTICES   0X2000

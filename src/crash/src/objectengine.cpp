@@ -218,6 +218,7 @@ unsigned long handleObjects(bool flag)
     for (int group = 0; group < 8; group++)
       familyRoutinePBCH(&headObjects[group], handleObject, flag);
   //}
+	return NULL;
 }
 
 
@@ -895,7 +896,7 @@ signed long objectRotate(signed long angA, signed long angB, signed long speed, 
   }
   else
   {
-    absang180 = abs(absang180);
+    absang180 = abs((long) absang180);
     
     //do a small adjustment...
     if (absang180 == 0x800)  //for parallel exact 180 degree separated objects
@@ -1620,7 +1621,7 @@ unsigned long objectPhysics(object *obj, bool flag)
       //angle) deviate from the current angle of approach? (diffangX)
       unsigned long angXZ      = (moveState->angle + baseAngle) & 0xFFF;
       unsigned long approachXZ = obj->process.vectors.miscB.X;
-      unsigned long diffangX   = abs(angXZ - approachXZ); 
+      unsigned long diffangX   = abs((long)(angXZ - approachXZ)); 
       
       //given the results of the above calculations, the following code updates
       //speed and possibly the new approach angle of the object 
@@ -1908,7 +1909,7 @@ unsigned long objectPhysics(object *obj, bool flag)
         objectSpace(obj);
     //}
   }
-}
+  return NULL; }
 
 bool isOutOfRange(object *obj, cvector *pointA, cvector *pointB, unsigned long boundW, unsigned long boundH, unsigned long boundD)
 {

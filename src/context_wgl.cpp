@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <Windows.h>
 #include <gl/gl.h>
 
 #include "context_wgl.h"
@@ -68,6 +69,8 @@ LRESULT context_wgl::onClick(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
   if (root)
     root->postMessage(CPM_POINT, (param)x, (param)y);
+
+  return NULL;
 }  
 
 LRESULT context_wgl::onMouse(UINT uMsg, WPARAM wParam, LPARAM lParam) 
@@ -77,12 +80,16 @@ LRESULT context_wgl::onMouse(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
   if (root)
     root->postMessage(CPM_HOVER, (param)x, (param)y);
+
+  return NULL;
 }  
 
 
 LRESULT context_wgl::onPaint(UINT uMsg, WPARAM wParam, LPARAM lParam) 
 {
   render();
+
+  return NULL;
 }  
 
 bool context_wgl::wglCreateContext()
@@ -237,6 +244,9 @@ static DWORD WINAPI renderThreadRouter(void* params)
 {
   context_wgl *thisContext = (context_wgl*)params;
   thisContext->renderThread();
+
+
+  return NULL;
 }
     
 void context_wgl::renderThread()

@@ -9,7 +9,7 @@ extern NSF *nsf;
 extern ccamera camera;
 extern entry *currentZone;
 extern unsigned char *currentSection;
-extern unsigned long currentProgressV;
+extern signed long currentProgressV;
 extern object *objects;
 extern object *player;
 

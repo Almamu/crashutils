@@ -68,7 +68,7 @@
 #define PIT_DATETIME    12  ///< Property item type: Date & Time
 #define PIT_CATALOG     99  ///< Property item type: Catalog
 
-/*********************/*******************************************************/
+/****************************************************************************/
 // Public structures and notifications
 
 /// @var PROPGRIDFDITEM

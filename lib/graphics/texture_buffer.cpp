@@ -338,10 +338,12 @@ void texture_buffer::subTextureCreate(textureCacheEntry *tex)
       }
     } 
 
-    unsigned long pixBuf[w*h*2]; 
+	unsigned long* pixBuf = (unsigned long*) calloc(w * h * 2, sizeof(unsigned long));
 
     subTexturePixels(tex, pixBuf);
     storeBlock(pixBuf, block->X, block->Y, w, h);
+
+	free(pixBuf);
   }
   
   point texA, texB, texC, texD;

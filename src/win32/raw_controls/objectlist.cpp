@@ -46,6 +46,7 @@ int objectList::update()
 {
   for (int lp = 0; lp < parentCount; lp++)
     links[lp]->update(hwnd, "Object", 1);
+  return 0;
 }
     
 int objectList::handle(LPARAM lParam)

@@ -1,4 +1,5 @@
 #include "scene.h"
+#include <Windows.h>
 
 scene::scene(NSD *_nsd, NSF *_nsf)
 {
@@ -179,7 +180,7 @@ void scene::addModel(entry *svtx, int frame, vector *trans, angle *rot, vector *
   signed long modelXscale = getWord(modelHeader,   4, true);
   signed long modelYscale = getWord(modelHeader,   8, true);
   signed long modelZscale = getWord(modelHeader, 0xC, true);
-    
+
   mod->type           = 1;
   mod->object_model   = geom->getObject(svtx, frame);
   mod->object_model->positionMode = 1;

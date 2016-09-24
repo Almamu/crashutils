@@ -35,7 +35,7 @@ class context
   
   virtual void draw() { contextScene->draw(); }
   virtual void update() {};
-  virtual bool setActive() {};
+  virtual bool setActive() { return true; };
   
   virtual void setProjection(int mode) {};
   
@@ -54,7 +54,7 @@ class context
   virtual void getViewport(int &width, int &height);
   virtual void setViewport(int width, int height);
   
-  virtual dpoint project2d(double X, double Y, double Z) {};
+  virtual dpoint project2d(double X, double Y, double Z) { dpoint tmp; memset(&tmp, 0, sizeof(dpoint)); return tmp; };
   
   //... etc  
 };

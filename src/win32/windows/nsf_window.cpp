@@ -102,7 +102,9 @@ LRESULT nsf_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		  
   for (int lp=0; lp<MAX_LEVELEIDS; lp++)
     globalList->lookupAddEntry(nsd->levelEIDs[lp]);
-}
+
+
+  return NULL; }
 
 LRESULT nsf_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -139,6 +141,9 @@ LRESULT nsf_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
     }
     break;
   }
+
+
+  return NULL;
 }
          
 LRESULT nsf_window::onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -201,4 +206,7 @@ LRESULT nsf_window::onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam)
       TrackPopupMenu(hCodeMenu, TPM_BOTTOMALIGN | TPM_LEFTALIGN, mouseX, mouseY, 0, hSelf, NULL);
     }
   }
+
+
+  return NULL;
 }

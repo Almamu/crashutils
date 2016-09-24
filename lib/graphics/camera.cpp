@@ -77,7 +77,7 @@ void camera::move(float amt)
     location.Z -= amt;
   else if (mode == 1)
   {
-    const double radian = 3.14159265d/180;
+    const double radian = 3.14159265/180;
 
     fvector displacement;
     
@@ -162,6 +162,8 @@ fvector camera::getLocation(long X, long Y, long Z)
   trans.X = (((float)X) / 0x1000) * 8;
   trans.Y = (((float)Y) / 0x1000) * 8;
   trans.Z = (((float)Z) / 0x1000) * 8;
+
+  return trans;
 }
 
 void camera::translate(long X, long Y, long Z)

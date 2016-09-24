@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include <gl/gl.h>
 
 #include "graphics/gl/model_msc_gl.h"

@@ -49,6 +49,9 @@ class model_window : public mdi_child_window
         //default: onExternal((int)uMsg, lparam, rparam); break;
       }
     } 
+
+
+	return NULL;
   }
   
   void onLoadLevel();

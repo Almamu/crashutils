@@ -26,6 +26,8 @@ LRESULT surface::onPaint(UINT uMsg, WPARAM wParam, LPARAM lParam)
   SelectObject(hdcMem, hbmOld);
   
   EndPaint(hSelf, &ps);
+
+  return NULL;
 }
 
 void surface::paint()

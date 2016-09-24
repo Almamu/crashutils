@@ -15,10 +15,12 @@ struct model_path
 
 class context_plugin_section_visual : public context_plugin
 {
+  public:
+	  context_plugin_visual *parent;
+
   protected:
-  
-  context_plugin_visual *parent;
-  
+  unsigned char* currentSection = NULL;
+  entry* currentZone = NULL;
   static itemCache<model_path> pathCache;
   
   public:

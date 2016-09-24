@@ -50,18 +50,21 @@ LRESULT shader_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
   clearHeight->addSpin(IDC_SPINCLEARHEIGHT, -32768, 32767);
   
   created = true;
+  return NULL;
 }
 
 LRESULT shader_window::onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   depth->handle(0, lParam);
   clearHeight->handle(0, lParam);
+  return NULL;
 }
 
 LRESULT shader_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   depth->handle(wParam, 0);
   clearHeight->handle(wParam, 0);
+  return NULL;
 }
 
 void shader_window::onExternal(int msg, param lparam, param rparam)

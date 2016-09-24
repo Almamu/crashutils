@@ -46,6 +46,8 @@ LRESULT camera_path_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
     
   zoomBack = new edit(IDC_EDITZOOMBACK, rcClient.right-140, 265, 120, 18, hSelf);
   zoomBack->addSpin(IDC_SPINZOOMBACK);
+
+  return NULL;
 }
 
 LRESULT camera_path_window::onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -53,6 +55,8 @@ LRESULT camera_path_window::onNotify(UINT uMsg, WPARAM wParam, LPARAM lParam)
   cameraVector[0]->handle(0, lParam);
   cameraVector[1]->handle(0, lParam);
   cameraVector[2]->handle(0, lParam);
+
+  return NULL;
 }
 
 LRESULT camera_path_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -72,6 +76,8 @@ LRESULT camera_path_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
     sprintf(tempString, "%i", section.length*section.avgNodeDist);
     ::SetWindowText(pathLength, tempString);
   }
+
+  return NULL;
 }
 
 void camera_path_window::onExternal(int msg, param lparam, param rparam)

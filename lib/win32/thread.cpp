@@ -17,6 +17,8 @@ DWORD WINAPI thread_win::threadRouter(void *params)
 {
   thread_win *thisThread = (thread_win*)params;
   thisThread->run();
+
+  return NULL;
 }
 
 void thread_win::suspend()

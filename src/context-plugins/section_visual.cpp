@@ -1,4 +1,6 @@
+#include <math.h>
 #include "section_visual.h"
+#include "editor.h"
 
 void context_plugin_section_visual::onInit()
 {
@@ -22,14 +24,14 @@ void context_plugin_section_visual::messageRouter(int msg, param lparam, param r
         // initialize and add the new path model
         model_path sectionPath;
         sectionPath.path   = geom->getMisc();
-        sectionPath.trail  = sectionPath.path->newLines(200);
-        sectionPath.arrows = sectionPath.path->newTriangles(200);
+        sectionPath.trail  = sectionPath.path->newLines(geom->primAlloc, 200);
+        sectionPath.arrows = sectionPath.path->newTriangles(geom->primAlloc, 200);
         for (int lp = 0; lp < 200; lp++)
         {
           sectionPath.trail[lp]  = { 0, 0 };
           sectionPath.arrows[lp] = { 0, 0, 0 };
         }
-        pathCache->get(zone, sectionIndex, sectionPath); 
+        pathCache.get(zone, sectionIndex, sectionPath); 
         
         // grab the corresponding section to build the model
         unsigned char *section = zone->itemData[headerColCount+sectionIndex];  
@@ -63,7 +65,7 @@ void context_plugin_section_visual::messageRouter(int msg, param lparam, param r
       curPath->color  = { 1.0, 0.0, 0.0 };  // select new path with red
     }
     break;
-    case CPM_UPDATE_SECTION_PATH_POINT:
+    /*case CPM_UPDATE_SECTION_PATH_POINT:
     {
       entry *currentZone          = parent->parent->currentZone;
       signed char *currentSection = parent->parent->currentSection;
@@ -82,7 +84,7 @@ void context_plugin_section_visual::messageRouter(int msg, param lparam, param r
       
       buildPath(currentZone, currentSection, 0, pathNodeCount);
     }
-    break;
+    break;*/
   }
   
   context_plugin::messageRouter(msg, lparam, rparam);

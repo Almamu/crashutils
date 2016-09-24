@@ -70,7 +70,7 @@ class camera
   void update();
 
   camera *getNested()                 { return nested; }
-  void *setNested(camera *newNested)  { nested = newNested; }
+  void *setNested(camera *newNested) { nested = newNested; return NULL; }
   
   virtual void view() {};
   virtual camera *newCamera() { return new camera(this); }

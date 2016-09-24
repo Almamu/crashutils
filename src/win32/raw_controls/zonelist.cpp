@@ -80,7 +80,7 @@ void zoneList::occupy(entry *zone)
     
     unsigned char codeIndex = entity[0x12];
     unsigned long entityCodeEID = nsd->levelEIDs[codeIndex];
-    char entityCodeEIDString[5];
+    char entityCodeEIDString[6];
     getEIDstring(entityCodeEIDString, entityCodeEID);
     
     sprintf(zoneEntityString[lp], "%i: %s", entityID, entityCodeEIDString);

@@ -1,4 +1,5 @@
 #include "geometry.h"
+#include <assert.h>
 
 #include "../crash/eid.h"
 
@@ -63,7 +64,7 @@ void geometry::resetObjectCache()
   {
     objectCache[lp].EID = EID_NONE;
    
-    for (int lp2 = 0; lp2 < 32; lp2++)
+    for (int lp2 = 0; lp2 < MAX_OBJECT_FRAMES; lp2++)
       objectCache[lp].object[lp2] = 0;
   }
 }
@@ -125,6 +126,8 @@ model_wld *geometry::getWorld(entry *wgeo)
 
 model_obj *geometry::getObject(entry *svtx, int frame)
 {
+	assert(frame < MAX_OBJECT_FRAMES);
+
   unsigned long EID        = svtx->EID;
   unsigned long cacheIndex = (EID >> 15) & 0xFF; 
   

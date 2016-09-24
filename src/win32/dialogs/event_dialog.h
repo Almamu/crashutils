@@ -1,8 +1,8 @@
 #ifndef EVENT_DIALOG_H
 #define EVENT_DIALOG_H
 
-#include "../src/dialog.h"
-#include "../../crash/crash_system.h"
+#include "dialog.h"
+#include "crash_system.h"
 
 #define ID_TEXT           200
 #define ID_EVENTBOX       201
