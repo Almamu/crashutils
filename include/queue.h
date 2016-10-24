@@ -2,6 +2,7 @@
 #define QUEUE_H
 
 #include <stdlib.h>
+#include <assert.h>
 
 template<class U> class queue
 {
@@ -75,14 +76,10 @@ void queue<U>::add(U src)
 template <class U>
 U queue<U>::remove()
 {
-  if (head != tail) 
-  {
-    
-  U elem = data[head++];
-  if (head == size) { head = 0; }
-  return elem;
-  
-  }
+	assert(head != tail);
+	U elem = data[head++];
+	if (head == size) { head = 0; }
+	return elem;
 }
 
 template <class U>

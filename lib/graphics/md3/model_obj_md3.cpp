@@ -51,13 +51,13 @@ void model_obj_md3::exportMD3(entry *svtx, texture_buffer_md3 *texbuf, prim_allo
     for (int vrt = 0; vrt < vertCount; vrt++)
     {
       svector *coord = &md3_vertices[frm][vrt].coord;
-      coord->X = vertices[vrt].X * 64;
-      coord->Y = vertices[vrt].Y * 64;
-      coord->Z = vertices[vrt].Z * 64;
+      coord->X = (signed short) (vertices[vrt].X * 64);
+      coord->Y = (signed short) (vertices[vrt].Y * 64);
+      coord->Z = (signed short) (vertices[vrt].Z * 64);
       
       md3_normal *normal = &md3_vertices[frm][vrt].normal;
-      normal->z = atan2(normals[vrt].Y, normals[vrt].X) * 255 / (2 * PI);
-      normal->a = acos(normals[vrt].Z) * 255 / (2 * PI);
+      normal->z = (unsigned char) (atan2(normals[vrt].Y, normals[vrt].X) * 255 / (2 * PI));
+      normal->a = (unsigned char) (acos(normals[vrt].Z) * 255 / (2 * PI));
     }
     
     frames[frm].min_bounds = bound.P1;
@@ -67,7 +67,7 @@ void model_obj_md3::exportMD3(entry *svtx, texture_buffer_md3 *texbuf, prim_allo
     float A = bound.P2.X - bound.P1.X;
     float B = bound.P2.Y - bound.P1.Y;
     float C = bound.P2.Z - bound.P2.Z;
-    float radius = sqrt((A*A)+(B*B)+(C*C))/2;
+    float radius = (float) (sqrt((A * A) + (B * B) + (C * C)) /2);
     frames[frm].radius = radius;
     
     sprintf(frames[frm].name, "Frame %i", frm);

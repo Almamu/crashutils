@@ -12,7 +12,7 @@ void context_plugin_section_select::onRender()
   NSD *nsd; NSF *nsf; 
   contextScene->getNSDNSF(nsd, nsf);
   
-  for (int zoneIndex=0; zoneIndex<nsf->entryCount[7]; zoneIndex++)
+  for (unsigned long zoneIndex=0; zoneIndex<nsf->entryCount[7]; zoneIndex++)
   {
     entry *zone = nsf->entries[7][zoneIndex];
     unsigned char *zoneHeader = zone->itemData[0];
@@ -38,9 +38,9 @@ void context_plugin_section_select::onRender()
         signed short nodeY = getHword(zoneSection, 0x34+(pathIndex*12), true);
         signed short nodeZ = getHword(zoneSection, 0x36+(pathIndex*12), true);
         
-        dpoint pathPoint = { zoneX + nodeX,
-                             zoneY + nodeY,
-                             zoneZ + nodeZ };
+        dpoint pathPoint = { (double) (zoneX + nodeX),
+                             (double) (zoneY + nodeY),
+                             (double) (zoneZ + nodeZ) };
   
         int sectPointIndex = (sectIndex << 12) | (pathIndex);
         

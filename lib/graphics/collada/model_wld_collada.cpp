@@ -49,10 +49,13 @@ void model_wld_collada::exportDAE(entry *wgeo, texture_buffer_img *texbuf, prim_
                             EIDString, EIDString);
   fprintf(dae, "\t\t\t<mesh>\n");
   
-  mesh_source sources[] = { {    /*vertCount*/polyCount*3, "positions", 3, (float*)&vertices[0], "XYZ", 3, 0 },
-                             //{   vertCount,  "normals", 3, (float*)&vertices[0], "XYZ", 0, 3 },
-                            {    /*vertCount*/polyCount*3,    "colors", 3, (float*)&vertices[0], "RGB", 3, 3 },
-                            {                 polyCount*3,       "map", 2,                    0,  "ST", 2, 0 } };
+  mesh_source sources[] =
+  {
+	  {    /*vertCount*/(unsigned long) (polyCount * 3), "positions", 3, (float*)&vertices[0], "XYZ", 3, 0 },
+      //{   vertCount,  "normals", 3, (float*)&vertices[0], "XYZ", 0, 3 },
+      {    /*vertCount*/(unsigned long)(polyCount * 3),    "colors", 3, (float*)&vertices[0], "RGB", 3, 3 },
+      {    /*vertCount*/(unsigned long)(polyCount * 3),       "map", 2,                    0,  "ST", 2, 0 }
+  };
                            
   for (int src=0; src<3; src++)
   {

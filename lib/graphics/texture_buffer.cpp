@@ -296,7 +296,7 @@ void texture_buffer::subTextureCreate(textureCacheEntry *tex)
           else
             distY = ((float)(6 + grouplogDistY) / 20);
           
-          signed short distRatio = (distX + distY) * 25;
+          signed short distRatio = (short) ((distX + distY) * 25);
 
           groupPriority[lp] = allocRatio + distRatio;
         }
@@ -478,6 +478,8 @@ bool texture_buffer::combineBlocks(int srcGroup, int dstGroup, point2 loc)
 
     return true;
   }
+
+  return false;
 }
 
 unsigned short texture_buffer::addFreeBlock(int dstGroup, point2 loc)
@@ -732,10 +734,10 @@ void texture_buffer::addClut(unsigned char chunkIndex, unsigned char clutIndex)
 	  unsigned int totalOffset = (indexOffset + count) * 2;
     unsigned long color = getHword(colors, totalOffset, true);
 
-    unsigned char RP = (color & 0x1F);
-    unsigned char GP = ((color & 0x3E0) >> 5);
-    unsigned char BP = ((color & 0x7C00) >> 10);
-	  unsigned char AP = ((color & 0x8000) >> 15);
+    unsigned char RP = (unsigned char) (color & 0x1F);
+    unsigned char GP = (unsigned char) ((color & 0x3E0) >> 5);
+    unsigned char BP = (unsigned char) ((color & 0x7C00) >> 10);
+	  unsigned char AP = (unsigned char) ((color & 0x8000) >> 15);
 	
     /*
      Intensity        PC      PSX

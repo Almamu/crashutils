@@ -8,9 +8,9 @@ void model::calcColors()
 
   if (type == 1)
   {
-    fmatrix LLM, LROT, LOBJ;
+    fmatrix LLM, LROT/*, LOBJ*/;
     fvector LLV;
-    fcolormatrix LCM;
+    // fcolormatrix LCM;
     fcolor LC, OC;
     
     //[LRot]  = [ cos(x)cos(z) - sin(x)cos(y)sin(z), sin(x)sin(y), cos(x)sin(z) + sin(x)cos(y)cos(z)]
@@ -27,18 +27,18 @@ void model::calcColors()
     euler.Z = -rot.Z; 
     
     if (euler.X > 0) {}
-    else             { euler.X = 360 + ((int)euler.X % 360); }
+    else             { euler.X = (float) (360 + fmod(euler.X, 360)); }
     if (euler.Y > 0) {}
-    else             { euler.Y = 360 + ((int)euler.Y % 360); }   
+    else             { euler.Y = (float) (360 + fmod(euler.Y, 360)); }
     if (euler.Z > 0) {}
-    else             { euler.Z = 360 + ((int)euler.Z % 360); }
+    else             { euler.Z = (float) (360 + fmod(euler.Z, 360)); }
     
-    float sinx = sin(euler.X*radian);
-    float siny = sin(euler.Y*radian);
-    float sinz = sin(euler.Z*radian);
-    float cosx = cos(euler.X*radian);
-    float cosy = cos(euler.Y*radian);
-    float cosz = cos(euler.Z*radian);
+    float sinx = (float) sin(euler.X*radian);
+    float siny = (float) sin(euler.Y*radian);
+    float sinz = (float) sin(euler.Z*radian);
+    float cosx = (float) cos(euler.X*radian);
+    float cosy = (float) cos(euler.Y*radian);
+    float cosz = (float) cos(euler.Z*radian);
     
     LROT.V1.X = (cosx*cosz) - (sinx*cosy*sinz);
     LROT.V1.Y = (siny*sinz);
@@ -71,7 +71,7 @@ void model::calcColors()
     
     vertex *vertices = object_model->vertices;
     fvector *normals = object_model->normals;
-    for (int lp = 0; lp < vertCount; lp++)
+    for (unsigned long lp = 0; lp < vertCount; lp++)
     {
       LLV.X = (LLM.V1.X * normals[lp].X) + (LLM.V2.X * normals[lp].Y) + (LLM.V3.X * normals[lp].Z);
       LLV.Y = (LLM.V1.Y * normals[lp].X) + (LLM.V2.Y * normals[lp].Y) + (LLM.V3.Y * normals[lp].Z);

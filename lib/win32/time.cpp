@@ -13,7 +13,7 @@ unsigned long time_win::getTime(bool scale)
   query.QuadPart *= BASE_MICROSECONDS;
   query.QuadPart /= freq.QuadPart;
   
-  unsigned long ticksTime = query.QuadPart;
+  unsigned long ticksTime = (unsigned long) query.QuadPart;
   
   if (scale)
     ticksTime = (unsigned long)((float)ticksTime * timeScale);
@@ -28,7 +28,7 @@ unsigned long time_win::getElapsedTime(bool scale)
   query.QuadPart = (query.QuadPart - start.QuadPart);
   query.QuadPart /= freq.QuadPart;
   
-  unsigned long elapsedTime = query.QuadPart;
+  unsigned long elapsedTime = (unsigned long) query.QuadPart;
   
   if (scale)
     elapsedTime = (unsigned long)((float)elapsedTime * timeScale);

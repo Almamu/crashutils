@@ -104,8 +104,8 @@ bool entryCache<T>::get(entry *key, T *&data)
   unsigned long EID        = key->EID;
   unsigned long cacheIndex = (EID >> 15) & 0xFF;
   
-  int newIndex = 0;
-  for (int lp = cacheIndex; lp < cacheIndex+0x100; lp++)
+  unsigned long newIndex = 0;
+  for (unsigned long lp = cacheIndex; lp < cacheIndex + 0x100; lp++)
   {
     newIndex = lp % 0x100;
     

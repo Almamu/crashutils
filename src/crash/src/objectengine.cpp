@@ -2,7 +2,8 @@
 
 //#include <time.h>
 #include <math.h>
-
+#include <assert.h>
+#include <Windows.h>
 #include "objectengine.h"
 
 /*OBJECT SYSTEM = ALL CODE FOR OBJECTS INCLUDING:
@@ -293,7 +294,7 @@ unsigned long handleObject(object *obj, bool flag)
       
       if (codeType == 0x200) 
       { 
-        animate = dispAniGlob & 0x100;
+        animate = (dispAniGlob & 0x100) == 0x100;
  
         if (codeID == 4)
         {
@@ -301,11 +302,11 @@ unsigned long handleObject(object *obj, bool flag)
             animate = true;
         }
       }
-      else if (codeType == 0x100) { animate = dispAniGlob & 0x20; }
-      else if (codeType == 0x300) { animate = dispAniGlob & 0x80; }      //process executable type
-      else if (codeType == 0x400) { animate = dispAniGlob & 0x800;}
-      else if (codeType == 0x500) { animate = dispAniGlob & 0x80; }
-      else if (codeType == 0x600) { animate = dispAniGlob & 0x80; }
+      else if (codeType == 0x100) { animate = (dispAniGlob & 0x20) == 0x20; }
+      else if (codeType == 0x300) { animate = (dispAniGlob & 0x80) == 0x80; }      //process executable type
+      else if (codeType == 0x400) { animate = (dispAniGlob & 0x800) == 0x800;}
+      else if (codeType == 0x500) { animate = (dispAniGlob & 0x80) == 0x80; }
+      else if (codeType == 0x600) { animate = (dispAniGlob & 0x80) == 0x80; }
       else                         { animate = false; }
     }
   }
@@ -339,8 +340,8 @@ unsigned long handleObject(object *obj, bool flag)
         //oldFrame = process[0xE4];
         //process.returnframe = oldStack;
     
-        unsigned short frameSP = getSP(obj);
-        unsigned short frameFP = getFP(obj);
+        unsigned long frameSP = getSP(obj);
+        unsigned long frameFP = getFP(obj);
     
         //process.returnframe = process.stack;   //codepointer1, the stack frame to return to
         obj->process.fp = obj->process.sp;
@@ -434,7 +435,7 @@ unsigned long handleObject(object *obj, bool flag)
 
     if (codeType == 0x200) 
     {
-      display = dispAniGlob & 0x200;
+      display = (dispAniGlob & 0x200) == 0x200;
 
       if (codeID == 4)
       {
@@ -443,11 +444,11 @@ unsigned long handleObject(object *obj, bool flag)
           display = true;
       }
     }
-    else if (codeType == 0x100) { display = dispAniGlob & 0x10; }
-    else if (codeType == 0x300) { display = dispAniGlob & 0x40; }
-    else if (codeType == 0x400) { display = dispAniGlob & 0x800;}
-    else if (codeType == 0x500) { display = dispAniGlob & 0x40; }      //process executable type
-    else if (codeType == 0x600) { display = dispAniGlob & 0x40; }
+    else if (codeType == 0x100) { display = (dispAniGlob & 0x10) == 0x10; }
+    else if (codeType == 0x300) { display = (dispAniGlob & 0x40) == 0x40; }
+    else if (codeType == 0x400) { display = (dispAniGlob & 0x800) == 0x800;}
+    else if (codeType == 0x500) { display = (dispAniGlob & 0x40) == 0x40; }      //process executable type
+    else if (codeType == 0x600) { display = (dispAniGlob & 0x40) == 0x40; }
     else                        { display = false; }
   }
 
@@ -537,12 +538,12 @@ void objectBound(object *obj, cvector *scale)
     unsigned long scaleY = abs(scale->Y);
     unsigned long scaleZ = abs(scale->Z);
    
-    obj->bound.xyz1.X = -scaleX * 12.5;
-    obj->bound.xyz2.X = scaleX * 12.5;
-    obj->bound.xyz1.Y = -scaleY * 12.5;
-    obj->bound.xyz2.Y = scaleY * 12.5;
-    obj->bound.xyz1.Z = -scaleZ * 12.5;
-    obj->bound.xyz2.Z = scaleZ * 12.5;
+    obj->bound.xyz1.X = (signed long) (-scaleX * 12.5);
+    obj->bound.xyz2.X = (signed long) (scaleX * 12.5);
+    obj->bound.xyz1.Y = (signed long) (-scaleY * 12.5);
+    obj->bound.xyz2.Y = (signed long) (scaleY * 12.5);
+    obj->bound.xyz1.Z = (signed long) (-scaleZ * 12.5);
+    obj->bound.xyz2.Z = (signed long) (scaleZ * 12.5);
 
      //set scale vector
     obj->process.vectors.scale.X = scale->X;
@@ -645,7 +646,7 @@ unsigned long objectPath(object *obj, unsigned long progressIndex, cvector *tran
     //find the magnitude in the XZ plane for the vector (i.e. the euclidian distance between the two
     //'points' for the vector at the index and proceeding vector)
     //xzDist = sub_80042B9C(pow((var_48 >> 8), 2) + pow((var_40 >> 8), 2)); //pythagorean theorem
-    unsigned long xzDist = sqrt((CTGVC(travel.X) * CTGVC(travel.X)) + (CTGVC(travel.Z) * CTGVC(travel.Z)));    
+	  unsigned long xzDist = (unsigned long)(sqrt((CTGVC(travel.X) * CTGVC(travel.X)) + (CTGVC(travel.Z) * CTGVC(travel.Z))));
     if (xzDist == 0) { return 0xFFFFFFF2; } //if this is a very small distance then return
 
     //?
@@ -764,12 +765,12 @@ unsigned long objectPath(object *obj, unsigned long progressIndex, cvector *tran
     //if bit 2 set (& specified sub index greater than the number of entity translation vectors)
     if ((obj->process.statusB & 2) && (obj->process.statusA & 4))
     {
-      arctan = atan2(-travel.X, -travel.Z);     //reverse angle? backwards
+      arctan = (float) atan2(-travel.X, -travel.Z);     //reverse angle? backwards
       XZangle = CTCA(arctan);
     }                                           //sub uses inverse cosine and definition of dot product
     else                                        //to find angle in the XZ plane between the specified the 
     { 
-      arctan = atan2(travel.X, travel.Z);     //specified entity vector and the proceeding one
+      arctan = (float) atan2(travel.X, travel.Z);     //specified entity vector and the proceeding one
       XZangle = CTCA(arctan);     //                             
     }
     
@@ -777,7 +778,7 @@ unsigned long objectPath(object *obj, unsigned long progressIndex, cvector *tran
 
     if (obj->process.statusB & 0x800)
     {
-      arctan = atan2(travel.X, travel.Z);
+      arctan = (float) atan2(travel.X, travel.Z);
       obj->process.vectors.rot.Z = CTCA(arctan);  //the angle in its particular quadrant
               
       signed long T;              
@@ -786,7 +787,7 @@ unsigned long objectPath(object *obj, unsigned long progressIndex, cvector *tran
       else
         T = abs(travel.Z) + (abs(travel.X) >> 1); //abs(xdist) + (abs(zdist)/2 + sign(zdist))  //sign returns 1 when neg, 0 when pos
 
-      arctan = atan2(travel.Y, T);
+      arctan = (float) atan2(travel.Y, T);
       obj->process.vectors.miscB.Z = -CTCA(arctan);    //this is set to angle downwards
     }
   }
@@ -801,10 +802,10 @@ unsigned long objectPath(object *obj, unsigned long progressIndex, cvector *tran
       else
         T = abs(travel.Z) + (abs(travel.X) >> 1); //abs(xdist) + (abs(zdist)/2 + sign(zdist))  //sign returns 1 when neg, 0 when pos
 
-      arctan = atan2(travel.Y, T);
+      arctan = (float) atan2(travel.Y, T);
       obj->process.vectors.miscB.Z = CTCA(arctan);                      //this is set to angle upwards
       
-      arctan = atan2(-travel.X, -travel.Z);
+      arctan = (float) atan2(-travel.X, -travel.Z);
       obj->process.vectors.rot.Z = CTCA(arctan);   //the reversed angle in its particular quadrant (90-angle)
     }
   }
@@ -844,7 +845,7 @@ signed long objectRotate(signed long angA, signed long angB, signed long speed, 
   //either the distance in the clockwise OR counter-clockwise direction
   unsigned long absang = abs(angB - angA);
   signed long ang180;
-  unsigned long absang180;
+  signed long absang180;
   
   if (absang < 0x801)  //are the angs at least 180 degrees apart?
   {
@@ -946,7 +947,7 @@ signed long objectRotateB(signed long angA, signed long angB, signed long speed,
   //either the distance in the clockwise OR counter-clockwise direction
   unsigned long absang = abs(angB - angA);
   signed long ang180;
-  unsigned long absang180;
+  signed long absang180;
   
   if (absang < 0x801)  //are the angs at least 180 degrees apart?
   {
@@ -1095,9 +1096,9 @@ void objectSpace(object *obj)
       //the binary supplies the first argument as a pointer directly to the vector in
       //the item data which cannot be done here because of the difference in endianness
       
-      cvector forward = { getWord(svtxFrame, 0x2C, true), 
-                          getWord(svtxFrame, 0x30, true), 
-                          getWord(svtxFrame, 0x34, true) };
+      cvector forward = { (signed long) getWord(svtxFrame, 0x2C, true), 
+						  (signed long)	getWord(svtxFrame, 0x30, true),
+						  (signed long) getWord(svtxFrame, 0x34, true) };
                           
       transform(&forward, 
                 &obj->process.vectors.trans, 
@@ -1522,9 +1523,9 @@ unsigned long objectColors(object *obj)
         zoneColors = &zoneHeader[0x318];
        
       //todo: code for write to entry data
-      setHword(zoneColors, 0x2A, true, fade);
-      setHword(zoneColors, 0x2C, true, fade);
-      setHword(zoneColors, 0x2E, true, fade);
+      setHword(zoneColors, 0x2A, (unsigned short) fade, true);
+      setHword(zoneColors, 0x2C, (unsigned short) fade, true);
+      setHword(zoneColors, 0x2E, (unsigned short) fade, true);
       
       return 0xFFFFFF01;
     }
@@ -1659,8 +1660,8 @@ unsigned long objectPhysics(object *obj, bool flag)
         if (accelV < 0)       { accelV = (accelV + 0x3FF) >> 10; }
         else                  { accelV = accelV >> 10; }
           
-        double radians = diffangX * (PI/0x800);
-        signed long totAccel = ((cos(radians)) * accelV); 
+        double radians = diffangX * (PI / 0x800);
+        signed long totAccel = (signed long) ((cos(radians)) * accelV); 
         obj->process.speed  += totAccel;
         
         //if we are now travelling at a low enough speed
@@ -1754,8 +1755,8 @@ unsigned long objectPhysics(object *obj, bool flag)
     //such a sequence of scaling followed by precision conversion 
     //can be replicated without explicit shifting by the implicit 
     //narrowing of double to long types
-    obj->process.vectors.miscA.X = sin(radians) * angval;        
-    obj->process.vectors.miscA.Z = cos(radians) * angval;        
+	obj->process.vectors.miscA.X = (signed long) (sin(radians) * angval);
+    obj->process.vectors.miscA.Z = (signed long) (cos(radians) * angval);
   }
   
   if (obj->process.statusA & 1)   //toggles on and off on ground
@@ -1911,7 +1912,7 @@ unsigned long objectPhysics(object *obj, bool flag)
   }
   return NULL; }
 
-bool isOutOfRange(object *obj, cvector *pointA, cvector *pointB, unsigned long boundW, unsigned long boundH, unsigned long boundD)
+bool isOutOfRange(object *obj, cvector *pointA, cvector *pointB, signed long boundW, signed long boundH, signed long boundD)
 {
   signed long xDist = pointA->X - pointB->X;
 
@@ -2091,6 +2092,8 @@ unsigned long transSmoothStopAtSolid(object *obj, cvector *velocity, traversalIn
   
   #undef newTrans
   #undef oldTrans
+
+  return 0;
 }
 
 //velocity = translation precision!
@@ -2455,7 +2458,7 @@ unsigned long traverseNodes(cvector *newTrans, object *obj, traversalInfo *trav)
   unsigned char *zoneHeader       = currentZone->itemData[0];
   unsigned long zoneNeighborCount = getWord(zoneHeader, 0x210, true); 
   
-  for (int count = 0; count < zoneNeighborCount; count++)
+  for (unsigned long count = 0; count < zoneNeighborCount; count++)
   {
     unsigned long neighborEID = getWord(zoneHeader, 0x214+(count*4), true);
     entry *neighbor           = crashSystemPage(neighborEID);
@@ -2498,12 +2501,12 @@ void handleNodes(object *obj, traversalInfo *trav, cspace *nodeSpace, cspace *co
   unsigned long nodeSpaceY = nodeSpace->xyz1.Y;
   unsigned long nodeSpaceZ = nodeSpace->xyz1.Z;
   
-  unsigned long colliderSpaceX1 = colliderSpace->xyz1.X;
-  unsigned long colliderSpaceY1 = colliderSpace->xyz1.Y;
-  unsigned long colliderSpaceZ1 = colliderSpace->xyz1.Z;
-  unsigned long colliderSpaceX2 = colliderSpace->xyz2.X;
-  unsigned long colliderSpaceY2 = colliderSpace->xyz2.Y;
-  unsigned long colliderSpaceZ2 = colliderSpace->xyz2.Z;
+  signed long colliderSpaceX1 = colliderSpace->xyz1.X;
+  signed long colliderSpaceY1 = colliderSpace->xyz1.Y;
+  signed long colliderSpaceZ1 = colliderSpace->xyz1.Z;
+  signed long colliderSpaceX2 = colliderSpace->xyz2.X;
+  signed long colliderSpaceY2 = colliderSpace->xyz2.Y;
+  signed long colliderSpaceZ2 = colliderSpace->xyz2.Z;
 
   unsigned long *curStruct = (unsigned long*)trav->traversal;    
   
@@ -2816,7 +2819,7 @@ void plotWalls(cvector *trans, object *obj, traversalInfo *trav)
     //Y + landOffset  or Y + landOffset/4096
     //Y + 12800,      or Y + 50      (approx 4 small tile nodes top y to bot y?)
     //Y + 170240,     or Y + 665       
-    plotZoneWalls(trav, &trav->nodeSpace, val, 
+    plotZoneWalls(trav, &trav->nodeSpace, val != 0, 
                   obj->process.vectors.trans.Y + landOffset, 
                   obj->process.vectors.trans.Y + 0x3200,
                   trans->Y+0x29900, trans->X, trans->Z);
@@ -2967,14 +2970,19 @@ void plotZoneWalls(traversalInfo *trav, cspace *nodeSpace, bool flag, signed lon
           else
             diffZ2 = (diffZ2 + 0x1FFF) >> 13;
                
-          signed short boxX1 = diffX1;
-          signed short boxX2 = diffX2;
-          signed short boxZ1 = diffZ1;
-          signed short boxZ2 = diffZ2;
-          signed short boxX1i = diffX1;
-          signed short boxX2i = diffX2;
-          signed short boxZ1i = diffZ1;
-          signed short boxZ2i = diffZ2;
+		  assert(diffX1 < UCHAR_MAX);
+		  assert(diffX2 < UCHAR_MAX);
+		  assert(diffZ1 < UCHAR_MAX);
+		  assert(diffZ2 < UCHAR_MAX);
+
+          signed char boxX1 = (signed char) diffX1;
+          signed char boxX2 = (signed char) diffX2;
+          signed char boxZ1 = (signed char) diffZ1;
+          signed char boxZ2 = (signed char) diffZ2;
+          signed char boxX1i = (signed char) diffX1;
+          signed char boxX2i = (signed char) diffX2;
+          signed char boxZ1i = (signed char) diffZ1;
+          signed char boxZ2i = (signed char) diffZ2;
                           
           if (-32 < boxZ1 && boxZ1 < 32)
           {
@@ -3259,7 +3267,7 @@ void plotObjWalls(cvector *trans, object *obj, traversalInfo *trav, bool flag)
                 signed long distX = (pairObj->process.vectors.trans.X - trans->X) >> 8;
                 signed long distZ = (pairObj->process.vectors.trans.Z - trans->Z) >> 8;
                 
-                float distF        = sqrt((distX*distX)+(distZ*distZ));
+                float distF        = (float) sqrt((distX*distX)+(distZ*distZ));
                 unsigned long dist = FLOAT2FIXED(distF) << 8;
                 
                 if (dist < 0x19000) { continue; }   //i'm not enclosing this in another level of if...
@@ -3314,13 +3322,13 @@ void plotObjWalls(cvector *trans, object *obj, traversalInfo *trav, bool flag)
                 signed long bitsB  = 0x80000000;
                 if (boxX2 < 32)
                 {
-                  unsigned char shiftVal = 32 - boxX2;
+                  unsigned char shiftVal = (unsigned char) (32 - boxX2);
                   bits <<= shiftVal;
                 }
 
                 if (boxX1 >= 0)
                 {
-                  unsigned char shiftVal = boxX1;
+                  unsigned char shiftVal = (unsigned char) (boxX1);
                   bitsB  >>= shiftVal;
                
                   bits &= ~bitsB;
@@ -3349,12 +3357,16 @@ void plotObjWalls(cvector *trans, object *obj, traversalInfo *trav, bool flag)
               //outer bounds of the region
               if (flag)
               {
-                signed long wallX1 = diffX1;  //s6
-                signed long wallX  = diffX1;  //s1
-                signed long wallX2 = diffX2;  //s4
-                signed long wallZ1 = diffZ1;  //s5
-                signed long wallZ  = diffZ1;  //s0
-                signed long wallZ2 = diffZ2;  //s3
+				  assert(diffX1 < UCHAR_MAX);
+				  assert(diffX2 < UCHAR_MAX);
+				  assert(diffZ1 < UCHAR_MAX);
+				  assert(diffZ2 < UCHAR_MAX);
+                signed char wallX1 = (signed char) diffX1;  //s6
+                signed char wallX  = (signed char) diffX1;  //s1
+                signed char wallX2 = (signed char) diffX2;  //s4
+                signed char wallZ1 = (signed char) diffZ1;  //s5
+                signed char wallZ  = (signed char) diffZ1;  //s0
+                signed char wallZ2 = (signed char) diffZ2;  //s3
                 
                 while (wallX < wallX2) 
                 {
@@ -3822,7 +3834,7 @@ unsigned long stopAtWalls(cvector *trans, unsigned long reqMovePtX, unsigned lon
 }
 
 //this is so we can clear the plot of non-walls, and replot with strictly walls
-unsigned long replotWalls(bool noClear, bool flags, cvector *trans, object *obj)
+unsigned long replotWalls(bool noClear, int flags, cvector *trans, object *obj)
 {
   traversalInfo *trav = &zoneTraversal;
   
@@ -3951,13 +3963,13 @@ unsigned long replotWalls(bool noClear, bool flags, cvector *trans, object *obj)
             signed long bitsB  = 0x80000000;
             if (boxX2 < 32)
             {
-              unsigned char shiftVal = 32 - boxX2;
+              unsigned char shiftVal = (unsigned char) (32 - boxX2);
               bits <<= shiftVal;
             }
 
             if (boxX1 > 0)
             {
-              unsigned char shiftVal = boxX1;
+              unsigned char shiftVal = (unsigned char) boxX1;
               bitsB  >>= shiftVal;
              
               bits &= ~bitsB;
@@ -4158,7 +4170,7 @@ signed long findAvgY(object *obj, traversalInfo *trav, cspace *nodeSpace, cspace
             colliderSpace->xyz2.Y >= nodeY1 &&
             colliderSpace->xyz2.Z >= nodeZ1)
         {
-          unsigned short nodeW, nodeH, nodeD;
+          unsigned long nodeW, nodeH, nodeD;
           if (nodeLevel >= depthX) { nodeW = zoneW >> depthX; }
           else                     { nodeW = zoneW >> nodeLevel; }
           if (nodeLevel >= depthY) { nodeH = zoneH >> depthY; }
@@ -4264,7 +4276,7 @@ unsigned long stopAtZone(object *obj, cvector *trans)
   unsigned char *zoneHeader = obj->zone->itemData[0];
   unsigned long zoneFlags   = getWord(zoneHeader, 0x2FC, true);
   
-  unsigned long waterVal = getWord(zoneHeader, 0x300, true);
+  signed long waterVal = (signed long) getWord(zoneHeader, 0x300, true);
   
   if (zoneFlags & 4)
   {
@@ -4543,7 +4555,7 @@ void queryNodes(unsigned char *zoneDim, cspace *nodeSpace, unsigned long *output
   unsigned short zoneMaxNodeH = getHword(zoneDim, 0x20, true);
   unsigned short zoneMaxNodeD = getHword(zoneDim, 0x22, true);
   
-  cvolume initDivision = { { 0, 0, 0 } , { (zoneW << 8), (zoneH << 8), (zoneD << 8) } };
+  cvolume initDivision = { { 0, 0, 0 } , { (signed long) (zoneW << 8), (signed long) (zoneH << 8), (signed long) (zoneD << 8) } };
   
   cbound nodeBound = { 
                          { (zoneX << 8) - nodeSpace->xyz1.X,            
@@ -5241,7 +5253,7 @@ void renderObject(object *obj)
      
       //we have to manually rearrange and swap endianness of the quad coordinates
       csquad quads[0x100];
-      for (int lp=0; lp<quadCount; lp++)
+      for (unsigned long lp=0; lp<quadCount; lp++)
       {
         quads[lp].Y2 = getHword(fragInfoArray, (0+(lp*4))*2, true);
         quads[lp].X2 = getHword(fragInfoArray, (1+(lp*4))*2, true);
@@ -5291,7 +5303,7 @@ void renderObject(object *obj)
       //sub_80018A40(itemN, *(0x5840C) + 0x88, process);
       //else                                                 //T1
       //sub_80018964(itemN, *(0x5840C) + 0x88, process);   
-   
+
       crashSystemObjectModel(svtx, frame, 
                    &obj->process.vectors.trans, 
                    &obj->process.vectors.rot, 

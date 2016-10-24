@@ -71,9 +71,9 @@ void model_wld::loadVertices(entry *wgeo, prim_alloc *prims)
 	  vertices[lp].Y = ((float)Y * 8) / 0x1000;
 	  vertices[lp].Z = ((float)Z * 8) / 0x1000;
 
-    unsigned char R = ((left & 0x000000FF));
-    unsigned char G = ((left & 0x0000FF00) >>  8);
-    unsigned char B = ((left & 0x00FF0000) >> 16);
+    unsigned char R = (unsigned char) ((left & 0x000000FF));
+    unsigned char G = (unsigned char) ((left & 0x0000FF00) >>  8);
+    unsigned char B = (unsigned char) ((left & 0x00FF0000) >> 16);
 
     vertices[lp].Rf = ((float)R / 256);
     vertices[lp].Gf = ((float)G / 256);

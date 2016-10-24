@@ -48,7 +48,7 @@ void initAllEntries(NSF *nsfA)
   {
     if (subsystems[type].initEntry)
     {
-      for (int count = 0; count < nsfA->entryCount[type]; count++)   
+      for (unsigned long count = 0; count < nsfA->entryCount[type]; count++)   
         (*subsystems[type].initEntry)(nsfA->entries[type][count]);
     }
   }

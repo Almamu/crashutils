@@ -5,13 +5,13 @@ void crashSystemDraw();
 entry *crashSystemPage(unsigned long EID);
 unsigned long crashSystemControl();
 unsigned long crashSystemTime();
-void crashSystemZoneWorldModels(entry *zone);
-void crashSystemObjectModel(entry *svtx, int frame,
+void crashSystemZoneWorldModels();
+void crashSystemObjectModel(entry *svtx, unsigned long frame,
                            cvector *trans, cangle *rot, cvector *scale,
                            cslightmatrix *light, cscolormatrix *color, cscolor *back, cscolor *backIntensity);
-void crashSystemSpriteModel(unsigned long texEID, unsigned char *texInfoArray, int scale, cvector *trans);
-void crashSystemFragmentModel(unsigned long texEID, int quadCount, csquad *quads,
-                              unsigned char *texInfoArray, int scale, cvector *trans);
+void crashSystemSpriteModel(unsigned long texEID, unsigned char *texInfoArray, unsigned long scale, cvector *trans);
+void crashSystemFragmentModel(unsigned long texEID, unsigned long quadCount, csquad *quads,
+                              unsigned char *texInfoArray, unsigned long scale, cvector *trans);
 void crashSystemViewMatrix();
 void crashSystemCameraUpdate();
 void crashSystemHandleObjects();

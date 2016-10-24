@@ -59,7 +59,7 @@ typedef struct
   unsigned short playerBackColorIntensity[3];
 } crash_zone_header;
 
-typedef struct
+/*typedef struct
 {
   signed long X;
   signed long Y;
@@ -76,7 +76,7 @@ typedef struct
     unsigned short maxDepthZ;
     unsigned short nodes[];
   } *collision;
-} crash_zone_dimensions;
+} crash_zone_dimensions;*/
 
 typedef struct
 {
@@ -150,7 +150,7 @@ void readCrashZoneSection(unsigned char *zoneSection, crash_zone_section &crashZ
 void readCrashZoneEntity(entry *zone, int entity, crash_zone_entity &crashZoneEntity);
 void readCrashZoneEntity(unsigned char *zoneEntity, crash_zone_entity &crashZoneEntity);
 
-unsigned char *getCrashZoneSection(entry *zone, int section);
-unsigned char *getCrashZoneEntity(entry *zone, int entity);
+unsigned char *getCrashZoneSection(entry *zone, unsigned long section);
+unsigned char *getCrashZoneEntity(entry *zone, unsigned long entity);
 
 #endif

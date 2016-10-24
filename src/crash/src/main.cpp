@@ -52,7 +52,7 @@ void crash_main()
   
     //8) transform all wgeo models (' vertices)
     #ifdef CRASH_SYSTEM_INTEGRATE
-    //crashSystemZoneWorldModels();
+    crashSystemZoneWorldModels();
     //we dont create models for the worlds yet, we just use their
     //geometry
     //in future we will need to if we want to implement the

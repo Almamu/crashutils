@@ -118,16 +118,16 @@ void gool_window::onSelectGool(entry *gool)
   unsigned char *item4 = currentGool->itemData[3];
   unsigned char *item5 = currentGool->itemData[4];
 
-  int IDcount = currentGool->itemSize[3]/2;
+  unsigned long IDcount = currentGool->itemSize[3] / 2;
   
   subIDlist->clear();
   eventIDlist->clear();
   
   unsigned long subIDoffset = getWord(item1, 0x10, true);
-  for (int lp=0; lp < subIDoffset; lp++)
+  for (unsigned long lp=0; lp < subIDoffset; lp++)
     eventIDlist->add("event", getHword(item4, lp*2, true));
     
-  for (int lp=0; lp < (IDcount-subIDoffset); lp++)
+  for (unsigned long lp=0; lp < IDcount - subIDoffset; lp++)
     subIDlist->add("sub", getHword(item4, (subIDoffset+lp)*2, true));
   
   int functionCount = currentGool->itemSize[4] / 0x10;

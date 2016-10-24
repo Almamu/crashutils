@@ -81,9 +81,9 @@ void camera::move(float amt)
 
     fvector displacement;
     
-    displacement.Y =  sin(rotation.Y*radian) * amt;
-    displacement.X = -sin(rotation.X*radian) * cos(rotation.Y*radian) * amt;
-    displacement.Z =  cos(rotation.X*radian) * cos(rotation.Y*radian) * amt;
+    displacement.Y =  (float) (sin(rotation.Y*radian) * amt);
+    displacement.X = (float) (-sin(rotation.X*radian) * cos(rotation.Y*radian) * amt);
+    displacement.Z =  (float) (cos(rotation.X*radian) * cos(rotation.Y*radian) * amt);
     
     location.X -= displacement.X;
     location.Y -= displacement.Y;

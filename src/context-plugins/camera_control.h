@@ -4,7 +4,7 @@
 #include "graphics/context_plugin.h"
 
 #include "../message.h"
-
+/*
 #define VK_SHIFT    0x10
 #define VK_LEFT	      37
 #define VK_UP	        38
@@ -30,7 +30,7 @@
 
 #define VK_LSHIFT 0xA0
 #define VK_RSHIFT 0xA1
-
+*/
 class context_plugin_camera_control : public context_plugin
 {
   private:

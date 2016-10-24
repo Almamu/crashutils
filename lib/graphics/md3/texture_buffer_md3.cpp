@@ -48,16 +48,16 @@ fquad2 texture_buffer_md3::getBlockCoords(point A, point B, point C, point D)
 texture *texture_buffer_md3::bakeBlock(texture *tex, float Rf, float Gf, float Bf)
 {
   //convert back the colors to 24bpp
-  unsigned char R = Rf * 256;
-  unsigned char G = Gf * 256;
-  unsigned char B = Bf * 256;
+  unsigned char R = (unsigned char) (Rf * 256);
+  unsigned char G = (unsigned char) (Gf * 256);
+  unsigned char B = (unsigned char) (Bf * 256);
   unsigned long color = RGBA(R,G,B,0);
   
   //get block width and height
   int w_sqr = (int)(tex->coords.C.X - tex->coords.A.X);
   int h_sqr = (int)(tex->coords.C.Y - tex->coords.A.Y);
-  if (w_sqr == 0) { w_sqr = (tex->coords.B.X - tex->coords.A.X); }
-  if (h_sqr == 0) { h_sqr = (tex->coords.B.Y - tex->coords.A.Y); }
+  if (w_sqr == 0) { w_sqr = (int) (tex->coords.B.X - tex->coords.A.X); }
+  if (h_sqr == 0) { h_sqr = (int) (tex->coords.B.Y - tex->coords.A.Y); }
   if (w_sqr < 0) { w_sqr = -w_sqr; }
   if (h_sqr < 0) { h_sqr = -h_sqr; }
   
@@ -140,9 +140,9 @@ texture *texture_buffer_md3::bakeBlock(texture *tex, float Rf, float Gf, float B
 texture *texture_buffer_md3::colorBlock(float Rf, float Gf, float Bf)
 {
   //convert back the colors to 24bpp
-  unsigned char R = Rf * 256;
-  unsigned char G = Gf * 256;
-  unsigned char B = Bf * 256;
+  unsigned char R = (unsigned char) (Rf * 256);
+  unsigned char G = (unsigned char) (Gf * 256);
+  unsigned char B = (unsigned char) (Bf * 256);
   unsigned long color = RGBA(R,G,B,0);
  
   //get the block group index

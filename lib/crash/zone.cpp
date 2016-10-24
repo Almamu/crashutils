@@ -174,7 +174,7 @@ void readCrashZoneEntity(unsigned char *zoneEntity, crash_zone_entity &crashZone
   }
 }
 
-unsigned char *getCrashZoneSection(entry *zone, int section)
+unsigned char *getCrashZoneSection(entry *zone, unsigned long section)
 {  
   unsigned char *zoneHeader = zone->itemData[0];
 
@@ -188,7 +188,7 @@ unsigned char *getCrashZoneSection(entry *zone, int section)
 	return zone->itemData[sectionIndex];
 }
 
-unsigned char *getCrashZoneEntity(entry *zone, int entity)
+unsigned char *getCrashZoneEntity(entry *zone, unsigned long entity)
 {
   unsigned char *zoneHeader = zone->itemData[0];
 

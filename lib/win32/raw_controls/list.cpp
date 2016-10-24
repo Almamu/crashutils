@@ -66,6 +66,7 @@ int list::handle(LPARAM lParam)
     }
   }
   
+  return LIST_UNCHANGED;
 }
 
 unsigned long list::getSelectedItem()

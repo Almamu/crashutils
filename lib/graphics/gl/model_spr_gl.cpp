@@ -9,9 +9,9 @@ void model_spr_gl::drawAt(vector loc)
 {
   glPushMatrix();
   
-  float X = (loc.X * 8)/0x1000;
-  float Y = (loc.Y * 8)/0x1000;
-  float Z = (loc.Z * 8)/0x1000;
+  float X = (float) ((loc.X * 8) / 0x1000);
+  float Y = (float) ((loc.Y * 8) / 0x1000);
+  float Z = (float) ((loc.Z * 8) / 0x1000);
   
   glTranslatef(X, Y, Z);
   

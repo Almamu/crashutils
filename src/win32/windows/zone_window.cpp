@@ -13,14 +13,14 @@ LRESULT zone_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
   // create menus
   hEntityMenu = CreatePopupMenu();
-  AppendMenu(hEntityMenu, MF_STRING, ID_ENTITY_SPAWN, "Spawn Object");
-  AppendMenu(hEntityMenu, MF_SEPARATOR, ID_SEPARATOR, "");
-  AppendMenu(hEntityMenu, MF_STRING, ID_ENTITY_PROPERTIES, "Properties");
+  AppendMenu(hEntityMenu, MF_STRING, ZONE_ID_ENTITY_SPAWN, "Spawn Object");
+  AppendMenu(hEntityMenu, MF_SEPARATOR, ZONE_ID_SEPARATOR, "");
+  AppendMenu(hEntityMenu, MF_STRING, ZONE_ID_ENTITY_PROPERTIES, "Properties");
 
   // create controls
 
 	// zone list
-  mainList = new zoneList(IDC_ZONELIST, nsf, nsd, 0, 0, 150, rcClient.bottom, hSelf);
+  mainList = new zoneList(ZONE_IDC_ZONELIST, nsf, nsd, 0, 0, 150, rcClient.bottom, hSelf);
 
 	// overhead context
   context_win *overheadContext;
@@ -28,29 +28,29 @@ LRESULT zone_window::onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam)
   params[1] = (param)1;
   SendMessageRoot(MSG_GET_CONTEXT, (WPARAM)0, (LPARAM)params);
   addChild(overheadContext);
-  overheadContext->create(WS_EX_CLIENTEDGE, 200, 30, 320, 240, IDC_CONTEXT_OVERHEAD);
+  overheadContext->create(WS_EX_CLIENTEDGE, 200, 30, 320, 240, ZONE_IDC_CONTEXT_OVERHEAD);
 
 	// child frame windows
 
 	// general window
   general_window *generalWindow = new general_window;
   addChild(generalWindow);
-  generalWindow->create(WS_EX_CLIENTEDGE, 150, 300, 400, rcClient.bottom-150, IDC_GENERALWINDOW);
+  generalWindow->create(WS_EX_CLIENTEDGE, 150, 300, 400, rcClient.bottom-150, ZONE_IDC_GENERALWINDOW);
 
 	// entity window
   entity_window *entityWindow = new entity_window;
   addChild(entityWindow);
-  entityWindow->create(WS_EX_CLIENTEDGE, 150, 300, 400, rcClient.bottom-150, IDC_ENTITYWINDOW);
+  entityWindow->create(WS_EX_CLIENTEDGE, 150, 300, 400, rcClient.bottom-150, ZONE_IDC_ENTITYWINDOW);
 
 	// shader window
   shader_window *shaderWindow = new shader_window;
   addChild(shaderWindow);
-  shaderWindow->create(WS_EX_CLIENTEDGE, 150, 300, 400, rcClient.bottom-150, IDC_ENTITYWINDOW);
+  shaderWindow->create(WS_EX_CLIENTEDGE, 150, 300, 400, rcClient.bottom-150, ZONE_IDC_ENTITYWINDOW);
 
 	// camera path window
   camera_path_window *cameraPathWindow = new camera_path_window;
   addChild(cameraPathWindow);
-  cameraPathWindow->create(WS_EX_CLIENTEDGE, 150, 300, 400, rcClient.bottom-150, IDC_ENTITYWINDOW);
+  cameraPathWindow->create(WS_EX_CLIENTEDGE, 150, 300, 400, rcClient.bottom-150, ZONE_IDC_ENTITYWINDOW);
 
 	// hide on init
   generalWindow->ShowWindow(SW_HIDE);
@@ -129,7 +129,7 @@ LRESULT zone_window::onCommand(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   switch(LOWORD(wParam))
   {
-    case ID_ENTITY_SPAWN:
+    case ZONE_ID_ENTITY_SPAWN:
     {
       int itemIndex   = mainList->getSelectedIndex();
       int entityIndex = (itemIndex & 0xFF00) >> 8;

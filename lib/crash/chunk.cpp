@@ -14,7 +14,7 @@ int readChunk(chunk &outChunk, unsigned char *chunkData)
   if (outChunk.type == 0)
   {
     unsigned long prevOffset = 0;
-	  for (int count = 0; count < outChunk.entryCount; count++)
+	  for (unsigned long count = 0; count < outChunk.entryCount; count++)
     {
       unsigned long offset      = getWord(chunkData, CHUNK_ENTRYOFFSETS+(count*4), true);
       outChunk.entryData[count] = &chunkData[offset];
@@ -30,7 +30,7 @@ int readChunk(chunk &outChunk, unsigned char *chunkData)
 
 int lookupEntryIndex(unsigned long EID, chunk *entryChunk)
 {
-  for (int count = 0; count < entryChunk->entryCount; count++)
+  for (unsigned long count = 0; count < entryChunk->entryCount; count++)
   {
     if (entryChunk->entries[count].EID == EID)
 	    return count;

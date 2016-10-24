@@ -81,7 +81,7 @@ void context_plugin_camera_trans::onSmoothTrans(point *apr)
   dirY = (aprY - contextCamera->location.Y);
   dirZ = (aprZ - contextCamera->location.Z);
   
-  float scale = sqrt((dirX*dirX) + (dirY*dirY) + (dirZ*dirZ));
+  float scale = (float) sqrt((dirX*dirX) + (dirY*dirY) + (dirZ*dirZ));
   
   dirX /= scale;
   dirY /= scale;

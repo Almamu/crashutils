@@ -54,7 +54,7 @@ void drawPath(vector loc, point P1, point P2, int scale)
   glVertex3f(X2, Y2, Z2);
   glEnd();
   
-  float normal = sqrt(diff.X*diff.X + diff.Y*diff.Y + diff.Z*diff.Z);
+  float normal = (float) sqrt(diff.X*diff.X + diff.Y*diff.Y + diff.Z*diff.Z);
   
   float mat44[16] = { 1, 0, 0, 0,
                        0, 1, 0, 0,
@@ -66,9 +66,9 @@ void drawPath(vector loc, point P1, point P2, int scale)
     
     fvector rot = { ndiff.Y, -ndiff.X, 0 };
     
-    float ac = acos( diff.Z/normal );
-    float s = sin(ac);
-    float c = cos(ac);
+    float ac = (float) acos( diff.Z/normal );
+    float s = (float) sin(ac);
+    float c = (float) cos(ac);
     float t = 1 - c;
     
     float x = rot.X;

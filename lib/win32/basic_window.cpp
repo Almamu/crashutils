@@ -78,9 +78,9 @@ bool basic_window::FileOpenBox(const char *filter, char *fileName, bool save)
   ofn.lpstrDefExt = "txt";
 
   if (save)
-    return GetSaveFileName(&ofn);
+    return GetSaveFileName(&ofn) != false;
   else
-    return GetOpenFileName(&ofn);
+    return GetOpenFileName(&ofn) != false;
 }
 
 void basic_window::SendMessageRoot(INT uMsg, WPARAM wParam, LPARAM lParam)

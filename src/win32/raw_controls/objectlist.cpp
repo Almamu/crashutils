@@ -66,6 +66,8 @@ int objectList::handle(LPARAM lParam)
       return OBJECTLIST_RCLICK;
     }
   }
+
+  return OBJECTLIST_UNCHANGED;
 }
 
 object *objectList::getSelectedObject()
@@ -305,7 +307,7 @@ void objlink::update(HWND hwnd, const char *heading, int level)   //update the c
     
   while(!equiv) 
   { 
-    object *newlinkobj;
+    // object *newlinkobj;
       
     if (diff_pt->next == 0)
     {

@@ -115,18 +115,18 @@ long edit::getValue(bool &valid)
   
   if (valid)
   {
-    float pval = atof((const char*)text);
+    float pval = (float) atof((const char*)text);
     
     long newVal;
-    newVal = pval * scale;
+    newVal = (long) (pval * scale);
     if (charValue)
     {
-      *charValue = newVal;
+      *charValue = (char) newVal;
       SendMessage(spin, UDM_SETPOS, 0, newVal);
     }
     else if (shortValue)
     {
-      *shortValue = newVal;
+      *shortValue = (short) newVal;
       SendMessage(spin, UDM_SETPOS, 0, newVal);
     }
     else if (longValue)
@@ -203,7 +203,7 @@ void edit::setValue(short newValue)
   char temp[30];
   if (charValue)
   {
-    char newCharValue = newValue;
+    char newCharValue = (char) newValue;
     *charValue = newCharValue;
     
     if (scale == 1)
@@ -255,7 +255,7 @@ void edit::setValue(long newValue)
   char temp[30];
   if (charValue)
   {
-    char newCharValue = newValue;
+    char newCharValue = (char) newValue;
     *charValue = newCharValue;
     
     if (scale == 1)
@@ -267,7 +267,7 @@ void edit::setValue(long newValue)
   }
   else if (shortValue)
   {
-    short newShortValue = newValue;
+    short newShortValue = (short) newValue;
     *shortValue = newShortValue;
     
     if (scale == 1)

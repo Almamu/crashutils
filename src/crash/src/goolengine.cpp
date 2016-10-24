@@ -392,8 +392,8 @@ object *spawnObject(entry *entityEntry, int entityIndex)
   if (entityEntry->type == 7) //if the entry who has some items as entitys is a zone
   {
     unsigned char *zoneHeader = entityEntry->itemData[0];
-    unsigned char zoneCollisionSkip  = getWord(zoneHeader, 0x204, true);
-    unsigned char zoneSectionCount   = getWord(zoneHeader, 0x208, true);
+    unsigned char zoneCollisionSkip  = (unsigned char) getWord(zoneHeader, 0x204, true);
+    unsigned char zoneSectionCount   = (unsigned char) getWord(zoneHeader, 0x208, true);
     
     unsigned short entityItemIndex = (zoneCollisionSkip + zoneSectionCount) + entityIndex; 
     entityItem = entityEntry->itemData[entityItemIndex];
@@ -633,7 +633,7 @@ object *spawnObject(entry *entityEntry, int entityIndex)
   entry *codeEntry          =          child->global;
   unsigned char *codeHeader = codeEntry->itemData[0];
 
-  type = getWord(codeHeader, 0, true);
+  type = (unsigned char) getWord(codeHeader, 0, true);
   unsigned long codeSubtype = getWord(codeHeader, 0x4, true);
   
   object *enemies = &headObjects[4];
@@ -787,12 +787,12 @@ object *addObject(object *parent, unsigned long levelListIndex, unsigned long su
   return child;
 }
 
-bool terminateObject(object *obj)
+int terminateObject(object *obj)
 {
   return terminateObject(obj, true);
 }
 
-bool terminateObject(object *obj, bool termEvent) 
+int terminateObject(object *obj, bool termEvent) 
 {                            
   if (!obj) { return GOOL_CODE_SUCCESS; }
 
@@ -891,8 +891,8 @@ unsigned long issueEvent(object *sender, object *recipient, unsigned long tag, u
     
     //subtract 8 for the tag and args here since they are not part of the
     //previous frame
-    unsigned short frameFP = getFP(recipient);
-    unsigned short frameSP = getSP(recipient) - 8;
+    unsigned short frameFP = (unsigned short) (getFP(recipient));
+    unsigned short frameSP = (unsigned short) (getSP(recipient) - 8);
 
     recipient->process.fp = recipient->process.sp;
 	
@@ -921,7 +921,7 @@ unsigned long issueEvent(object *sender, object *recipient, unsigned long tag, u
     {
       if (isErrorCode(result)) { return result; }
      
-      eventID = eventResult.id;
+      eventID = (unsigned short) eventResult.id;
     }
 
     if (sender)
@@ -957,7 +957,7 @@ unsigned long issueEvent(object *sender, object *recipient, unsigned long tag, u
     {                      
       recipient->process.event = tag;
 	  
-      for (int c=0; c<count; c++)
+      for (unsigned long c=0; c<count; c++)
         push(recipient, args[c]);
 
       //subtract word per arg from sp as the args are not part of the frame
@@ -1218,7 +1218,7 @@ unsigned long initProcess(object *obj, unsigned long levelListIndex, unsigned lo
     obj->process.vectors.scale.Z = 0x1000;
   }
 
-  if (levelListIndex == 4 | 5 | 0x1D )  { obj->zone = 0; }
+  if (levelListIndex == (4 | 5 | 0x1D) )  { obj->zone = 0; }
   if (levelListIndex == 0)              { obj->process.camZoom = 0; }
   
   if (obj->subtype != 3) { return 0xFFFFFFF2; }  //if not type 3
@@ -1340,7 +1340,7 @@ unsigned long executeSub(object *obj, unsigned long subid, unsigned long count, 
   obj->process.routineFlagsA = getWord(codeRoutine, 0, true);
   
   //push args  
-  for (int c=0; c<count; c++)
+  for (unsigned long c=0; c<count; c++)
     push(obj, args[c]);
 
   //create initial stack frame
@@ -1425,13 +1425,13 @@ bool testControls(unsigned long instruction, unsigned long port)
   else if (testMode == 1)  
   {
     unsigned long buttons = controls[port].tapState & 0xFFF; //grab 'has just been pressed' state (1 or 1 at instant of either occurence)
-    cond = buttons & testButtons;                            //test if the specified buttons have just been pressed
+    cond = (buttons & testButtons) >0;                       //test if the specified buttons have just been pressed
     if (!cond) { return notPressedInd; }                     //if none of the buttons have just been pressed
   }
   else if (testMode == 2) 
   {
     unsigned long buttons = controls[port].heldState & 0xFFF; //grab 'IS currently held down (1) or not (0)' state
-    cond = buttons & testButtons;                             //
+    cond = (buttons & testButtons) > 0;                       //
     if (!cond) { return notPressedInd; }                      //if none of the buttons (referred to by abits) are currently held down
   } 
   else if (testMode == 3) 
@@ -1439,7 +1439,7 @@ bool testControls(unsigned long instruction, unsigned long port)
     unsigned long buttons     = controls[port].tapState;
     unsigned long buttonsPrev = controls[port].prevTapState;  //index C
     
-    cond = testButtons & (buttons | buttonsPrev);             //determine if the button has just been pressed in 
+    cond = (testButtons & (buttons | buttonsPrev)) > 0;       //determine if the button has just been pressed in 
     if (!cond) { return notPressedInd; }                      //either the current or the previous read
   } 
   else if (testMode == 4)
@@ -1447,7 +1447,7 @@ bool testControls(unsigned long instruction, unsigned long port)
     unsigned long buttons     = controls[port].heldState;     //determine if the button is being held down in
     unsigned long buttonsPrev = controls[port].prevHeldState; //either the current or previous read
 
-    cond = testButtons & (buttons | buttonsPrev);
+    cond = (testButtons & (buttons | buttonsPrev)) > 0;
     if (!cond) { return notPressedInd; }
   }    
 
@@ -1461,13 +1461,13 @@ bool testControls(unsigned long instruction, unsigned long port)
     unsigned long buttons = controls[port].tapState;
     
     if (dirTest == 9)
-      cond = buttons & 0x1000;
+      cond = (buttons & 0x1000) > 0;
     else if (dirTest == 10)
-      cond = buttons & 0x2000;
+      cond = (buttons & 0x2000) > 0;
     else if (dirTest == 11)
-      cond = buttons & 0x4000;
+      cond = (buttons & 0x4000) > 0;
     else if (dirTest == 12)
-      cond = buttons & 0x8000;
+      cond = (buttons & 0x8000) > 0;
     else
     {
       unsigned long dirHeld   = (controls[port].heldState & 0xF000) >> 12;
@@ -1480,7 +1480,7 @@ bool testControls(unsigned long instruction, unsigned long port)
         unsigned long prevDirHeld   = (controls[port].prevHeldState & 0xF000) >> 12;
         unsigned long prevDirection = moveStates[prevDirHeld].mode;
 
-        cond = dirTest ^ prevDirection;                   
+        cond = (dirTest ^ prevDirection) > 0;
       }
     }
   }
@@ -1489,19 +1489,19 @@ bool testControls(unsigned long instruction, unsigned long port)
     unsigned long buttons = controls[port].heldState;
     
     if (dirTest == 9)
-      cond = buttons & 0x1000;
+      cond = (buttons & 0x1000) > 0;
     else if (dirTest == 10)
-      cond = buttons & 0x2000;
+      cond = (buttons & 0x2000) > 0;
     else if (dirTest == 11)
-      cond = buttons & 0x4000;
+      cond = (buttons & 0x4000) > 0;
     else if (dirTest == 12)
-      cond = buttons & 0x8000;
+      cond = (buttons & 0x8000) > 0;
     else
     {
       unsigned long dirHeld   = (controls[port].heldState & 0xF000) >> 12;
       unsigned long direction = moveStates[dirHeld].mode;
     
-      cond = ((dirTest ^ direction) == 0);                   
+	  cond = (dirTest ^ direction) == 0;
     }
   }
   else if (dirTestMode == 3)
@@ -1529,7 +1529,7 @@ const int bitsPop = 0xE1F;
 unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
 {
   unsigned long argBuf;  //var_58
-  unsigned long var_5C;  //var_5C
+  //unsigned long var_5C;  //var_5C
   object *recipient;     //var_60
   //..
   unsigned long args[8]; //var_B0
@@ -1573,7 +1573,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
       cout << temp << endl;
       
       unsigned long codeLocation = (unsigned long)codeCur - (unsigned long)obj->global->itemData[1];
-      for (int lp=0; lp<length; lp++)
+      for (unsigned long lp=0; lp<length; lp++)
       {
         if (lp == (offset - 1))
         {
@@ -2176,7 +2176,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
               else
               {
                 unsigned long PID = right >> 8;
-                bool test = states[PID] & 4;
+                bool test = (states[PID] & 4) == 4;
                 push(obj, test);
               }
             }
@@ -2187,7 +2187,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
               else
               {
                 unsigned long PID = right >> 8;
-                bool test = states[PID] & 8;
+                bool test = (states[PID] & 8) == 8;
                 push(obj, test);
               }
             }
@@ -2233,7 +2233,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
                   
                   if (neighborCount > 0)
                   {
-                    for (int index = 0; index < neighborCount; index++)
+                    for (unsigned long index = 0; index < neighborCount; index++)
                     {
                       unsigned long neighborEID = getWord(curZoneHeader, 0x214+(4*index), true);
                       entry *neighborZone = crashSystemPage(neighborEID);
@@ -2259,10 +2259,10 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
                 signed long distXZ = eucDistXZ(linkTrans, inTrans);
 
                 //we dont have to scale down for atan2
-                signed long arctan = atan2(distY, distXZ);
+                signed long arctan = (signed long) atan2(distY, distXZ);
                
                 //we do have to convert back to crash angles if we are using math's atan2
-                signed long ang = CTCA(arctan) & 0xFFF;
+                signed long ang = (signed long) (CTCA(arctan) & 0xFFF);
                 
                 push(obj, ang);
               }
@@ -2382,7 +2382,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
         unsigned long colorIndex = (instruction >> 15) & 0x3F;
 
         object *link = (object*)*((unsigned long*)&obj->process + linkIndex);
-        unsigned short color = right; 
+        unsigned short color = (unsigned short) right; 
         
         *((unsigned short*)&obj->colors + colorIndex) = color;
       }
@@ -2555,7 +2555,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
             pop(obj);
             
             //obj->process.sp = obj->process.fp + 0;
-            unsigned short prevState = peek(obj);
+            unsigned short prevState = (unsigned short) peek(obj);
             
             //var_D8 = (var_70 & 0xFFFF0000) | *(process[0xDC]);   //lhu   hmm...
             execState = (arg1 & 0xFFFF0000) | (prevState & 0xFFFF);
@@ -2574,7 +2574,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
               printObject(obj, execState);
               
               char temp[0x200];
-              sprintf(temp, "code location: %x", obj->global->itemData[1]);
+              sprintf(temp, "code location: %x", *(unsigned long*) (obj->global->itemData[1]));
               cout << temp << endl;
               
               sprintf(temp, "rte code location: %x dest code location: %x\n", srcret_c, dstret_c);
@@ -2752,7 +2752,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
           
           //we need to do the conversions first since we are using math.h sin
           unsigned long appXangC = (obj->process.vectors.miscB.X & 0xFFF);
-          unsigned long appXang  = CTGA(appXangC);
+          unsigned long appXang  = (unsigned long) CTGA(appXangC);
           unsigned long appX     = CTCA(sin(appXang));
          
           dstVector->X = ((appX/16) * scale) >> 8;
@@ -2760,7 +2760,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
           if (obj->process.statusB & 0x00200200)
           {
             appXangC           = (obj->process.vectors.miscB.X & 0xFFF);
-            appXang            = CTGA(appXangC);
+            appXang            = (unsigned long) CTGA(appXangC);
             unsigned long appZ = CTCA(cos(appXang));
             
             dstVector->Z = ((appZ/16) * scale) >> 8;
@@ -2768,7 +2768,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
           else
           {
             appXangC           = (obj->process.vectors.miscB.X & 0xFFF);
-            appXang            = CTGA(appXangC);
+            appXang            = (unsigned long) CTGA(appXangC);
             unsigned long appY = CTCA(cos(appXang));
             
             dstVector->Y = ((appY/16) * scale) >> 8;  
@@ -2934,7 +2934,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
           printObject(obj, arg1);
           
           char temp[0x200];
-          sprintf(temp, "code location: %x", obj->global->itemData[1]);
+          sprintf(temp, "code location: %x", *(unsigned long*) (obj->global->itemData[1]));
           cout << temp << endl;
           sprintf(temp, "jump and link code src location: %x jump and link code dst location: %x", srcjal_c, dstjal_c);
           cout << temp << endl;
@@ -2963,9 +2963,9 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
         
         bool cond;
         if (mem == 0x1F)
-          cond = pop(obj);
+          cond = pop(obj) > 0;
         else
-          cond = *((unsigned long*)&obj->process + mem);
+          cond = *((unsigned long*)&obj->process + mem) > 0;
       
         unsigned long argcount = (instruction >> 18) & 0x7; //min 1 max 8 args
         unsigned long mode     = (instruction >> 21) & 0x7; //mode for determining recipients when != 0x87 
@@ -2998,7 +2998,7 @@ unsigned long interpret(object *obj, unsigned long &arg1, event &arg2)
         
         if ((obj->process.statusA & 0x20000) == 0)
         {
-          for (int pback=0; pback<argcount; pback++)
+          for (unsigned long pback=0; pback<argcount; pback++)
             pop(obj);
         }
         else 
@@ -3520,7 +3520,7 @@ void printObject(object *obj, unsigned long state)
   
   sprintf(temp, "memory/stack contents: ");
   cout << temp << endl;
-  for (int i=initStack; i<memsize; i++)
+  for (unsigned long i=initStack; i<memsize; i++)
   {
     if (((i-initStack) % 16) == 0)
     {

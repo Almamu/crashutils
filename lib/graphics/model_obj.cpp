@@ -1,4 +1,5 @@
 #include "model_obj.h"
+#include "Windows.h"
 
 void model_obj::load(entry *svtx, int frame, point loc, texture_buffer *texbuf, prim_alloc *prims)
 {
@@ -31,7 +32,7 @@ void model_obj::load(entry *svtx, int frame, texture_buffer *texbuf, prim_alloc 
   unsigned long parentCID =         nsd->lookupCID(tgeoEID);
   chunk *parentChunk      =     nsf->lookupChunk(parentCID);
   entry *tgeoEntry        = lookupEntry(tgeoEID, parentChunk);
-				  
+
   loadVertices(svtx, frame, prims);
   loadPolygons(tgeoEntry, texbuf, prims);
   render = true;
@@ -50,9 +51,9 @@ void model_obj::loadVertices(entry *svtx, int frame, prim_alloc *prims)
   
   //**the game subtracts a default of 128 from the model coordinate offset  
   //(scaling here is also done to shift the sign to the appropriate position)
-  signed short offsetXP = (offsetX - 128) * SCALE_OBJECT;
-  signed short offsetYP = (offsetY - 128) * SCALE_OBJECT;
-  signed short offsetZP = (offsetZ - 128) * SCALE_OBJECT;
+  signed short offsetXP = (signed short) ((offsetX - 128) * SCALE_OBJECT);
+  signed short offsetYP = (signed short) ((offsetY - 128) * SCALE_OBJECT);
+  signed short offsetZP = (signed short) ((offsetZ - 128) * SCALE_OBJECT);
  
   vertices  = prims->allocVertices(vertCount);
   normals   = prims->allocNormals(vertCount);

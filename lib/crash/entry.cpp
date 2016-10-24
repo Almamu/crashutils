@@ -10,7 +10,7 @@ void readEntry(entry &outEntry, unsigned char *entryData)
   outEntry.itemCount = getWord(entryData, ENTRY_ITEMCOUNT, true);
   
   unsigned long prevOffset = 0;
-  for (int count = 0; count <= outEntry.itemCount; count++)
+  for (unsigned long count = 0; count <= outEntry.itemCount; count++)
   {
     unsigned long offset      = getWord(entryData, ENTRY_ITEMOFFSETS+(count*4), true);
     

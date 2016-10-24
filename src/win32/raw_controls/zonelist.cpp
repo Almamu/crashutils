@@ -50,7 +50,7 @@ void zoneList::occupy(entry *zone)
   neighborCount = getWord(zoneHeader, 0x210, true);
   
   char zoneModelString[8][30];
-  for (int lp=0; lp<modelCount; lp++)
+  for (unsigned long lp=0; lp<modelCount; lp++)
   {
     unsigned long modelEID = getWord(zoneHeader, 4+(lp*0x40), true);
     getEIDstring(zoneModelString[lp], modelEID);
@@ -72,11 +72,11 @@ void zoneList::occupy(entry *zone)
   }
   
   char zoneEntityString[20][10];
-  for (int lp=0; lp<entityCount; lp++)
+  for (unsigned long lp=0; lp<entityCount; lp++)
   {
     unsigned char *entity = zone->itemData[headerColCount+sectionCount+lp];
     
-    unsigned char entityID = getHword(entity, 0x8, true);
+    unsigned short entityID = getHword(entity, 0x8, true);
     
     unsigned char codeIndex = entity[0x12];
     unsigned long entityCodeEID = nsd->levelEIDs[codeIndex];
@@ -87,7 +87,7 @@ void zoneList::occupy(entry *zone)
   }
   
   char zoneNeighborString[20][10];
-  for (int lp=0; lp<neighborCount; lp++)
+  for (unsigned long lp=0; lp<neighborCount; lp++)
   {
     unsigned long neighborEID = getWord(zoneHeader, 0x214+(lp*4), true);
     getEIDstring(zoneNeighborString[lp], neighborEID);
@@ -117,15 +117,15 @@ void zoneList::occupy(entry *zone)
   AddItemToTree(hwnd, zoneString, 1, 1);
   
   AddItemToTree(hwnd, "Models", 2, 0);
-  for (int lp=0; lp<modelCount; lp++)    
+  for (unsigned long lp=0; lp<modelCount; lp++)    
     AddItemToTree(hwnd, zoneModelString[lp], 3, (lp << 8) | 3);
   
   AddItemToTree(hwnd, "Entities", 2, 0);
-  for (int lp=0; lp<entityCount; lp++)  
+  for (unsigned long lp=0; lp<entityCount; lp++)
     AddItemToTree(hwnd, zoneEntityString[lp], 3, (lp << 8) | 5);
   
   AddItemToTree(hwnd, "Sections", 2, 0);
-  for (int lp=0; lp<sectionCount; lp++)
+  for (unsigned long lp=0; lp<sectionCount; lp++)
   {
     char sectionString[20];
     sprintf(sectionString, "Section %i", lp);
@@ -136,7 +136,7 @@ void zoneList::occupy(entry *zone)
   }
   
   AddItemToTree(hwnd, "Neighbor Zones", 2, 0);
-  for (int lp=0; lp<neighborCount; lp++)
+  for (unsigned long lp=0; lp<neighborCount; lp++)
   {
     AddItemToTree(hwnd, zoneNeighborString[lp], 3, (lp << 8) | 2);
   }

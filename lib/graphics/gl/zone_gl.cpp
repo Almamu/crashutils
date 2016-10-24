@@ -70,12 +70,12 @@ void zone_gl::drawCollisions()
     
     if (nodeType == 0)           //solid scenery/wall = white
     {
-      float g = 1.0 - ((float)nodeSubtype*0.015625f);
+      float g = (float) (1.0 - ((float)nodeSubtype*0.015625f));
       glColor3f(1.0, g, 1.0);
     }
     else if (nodeType == 1)      //floor = light green
     {
-      float a = 0.5 - ((float)nodeSubtype*0.0078125f);
+      float a = (float) (0.5 - ((float)nodeSubtype*0.0078125f));
       glColor3f(a, 1.0, a);
     }
     else if (nodeType == 2)      //level bound wall = light blue

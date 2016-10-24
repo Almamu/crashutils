@@ -1,6 +1,7 @@
 #include "proplist.h"
 
 #include <stdio.h>
+#include <assert.h>
 
 propertyList::propertyList(int listID, int listType, int x, int y, int w, int h, HWND parent)
 {
@@ -79,10 +80,11 @@ void propertyList::addSubproperty(char _name[20], unsigned char _size, unsigned 
 {
   if (current->type == PROPERTY_BITS)
   {
+	  assert(curSuboffset < UCHAR_MAX);
     strcpy(current->bits[current->subCount].name, _name);
     current->bits[current->subCount].size = _size;
     current->bits[current->subCount].type = _type;
-    current->bits[current->subCount].offset = curSuboffset;
+    current->bits[current->subCount].offset = (unsigned char) curSuboffset;
     curSuboffset += _size;
 
     current->subCount++;
@@ -317,7 +319,7 @@ bool propertyList::occupy(unsigned char *itemData, unsigned long offset, int cou
 
 bool propertyList::initColumns()
 {
-  char szText[256];
+  // char szText[256];
   LVCOLUMN lvc;
 
   // Initialize the LVCOLUMN structure.

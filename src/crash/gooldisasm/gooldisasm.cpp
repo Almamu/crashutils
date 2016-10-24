@@ -59,14 +59,7 @@ void goolDisasm::setSource(unsigned char *code, int length)
 
 bool goolDisasm::lastInstruction()
 {
-  if ((pc*sizeof(long)) > (buffersize - 4))
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+	return (pc * (int) sizeof(long)) > (buffersize - 4);
 }
 
 long goolDisasm::getInstruction(int offset)
@@ -250,6 +243,8 @@ const char *goolDisasm::getOpcodeID(unsigned char opcode)
   {
     return opcodeTable[opcode];
   }
+
+  return opcodeTable[0];
 }
 
 void goolDisasm::getAddrFormat(char *sBuf, unsigned short addr, int mode)
@@ -409,8 +404,8 @@ void goolDisasm::getOperandFormat(char *instString, unsigned char opcode, long *
   {
     if (opcode == 0x11)
     {
-      unsigned short dst = operandBuffer[0];
-      unsigned short src = operandBuffer[1];
+      unsigned short dst = (unsigned short) operandBuffer[0];
+      unsigned short src = (unsigned short) operandBuffer[1];
        
       if (dst == 0xE1F)
         sprintf(dBuf, "push()");
@@ -455,7 +450,7 @@ void goolDisasm::getOperandFormat(char *instString, unsigned char opcode, long *
     }
     else if (opcode == 0x1C)
     {
-      unsigned short src = operandBuffer[0];
+      unsigned short src = (unsigned short) operandBuffer[0];
       getAddrFormat(sBuf, src, 0);
       
       sprintf(dBuf, "%s, %i, 0x%x, %i", sBuf, operandBuffer[1], operandBuffer[2], operandBuffer[3]);
@@ -483,7 +478,7 @@ void goolDisasm::getOperandFormat(char *instString, unsigned char opcode, long *
     } 
     else if (opcode == 0x24)
     {
-      unsigned short src = operandBuffer[0];
+      unsigned short src = (unsigned short) operandBuffer[0];
       getAddrFormat(sBuf, src, 0);
       
       int link = (operandBuffer[1]*4) + 0x60;
@@ -573,7 +568,7 @@ void goolDisasm::getOperandFormat(char *instString, unsigned char opcode, long *
     }
     else if (opcode == 0x84)
     {
-      unsigned short src = operandBuffer[0];
+      unsigned short src = (unsigned short) operandBuffer[0];
       getAddrFormat(sBuf, src, 0);
       
       sprintf(dBuf, "%s, %i, %i", sBuf, operandBuffer[1], operandBuffer[2]);
@@ -587,7 +582,7 @@ void goolDisasm::getOperandFormat(char *instString, unsigned char opcode, long *
     }
     else if (opcode == 0x85)
     {
-      unsigned short src = operandBuffer[0];
+      unsigned short src = (unsigned short) operandBuffer[0];
       getAddrFormat(sBuf, src, 0);
       
       sprintf(dBuf, "%s, %i, %i, %i, %i", sBuf, operandBuffer[3], operandBuffer[1], operandBuffer[2], operandBuffer[4]);
@@ -715,7 +710,7 @@ void goolDisasm::getOperandFormat(char *instString, unsigned char opcode, long *
     }
     else if (opcode == 0x8D)
     {
-      unsigned short src = operandBuffer[0];
+      unsigned short src = (unsigned short) operandBuffer[0];
       getAddrFormat(sBuf, src, 0);
      
       sprintf(dBuf, "%s, %x, %i, %i, %i", sBuf, operandBuffer[1], operandBuffer[2], operandBuffer[3], operandBuffer[4]);
@@ -730,7 +725,7 @@ void goolDisasm::getOperandFormat(char *instString, unsigned char opcode, long *
     }
     else if (opcode == 0x87 || opcode == 0x8F || opcode == 0x90)
     {
-      unsigned short src = operandBuffer[0];
+      unsigned short src = (unsigned short) operandBuffer[0];
       getAddrFormat(sBuf, src, 0);
      
       sprintf(dBuf, "%s, %i, %i, %i", sBuf, operandBuffer[1], operandBuffer[2], operandBuffer[3]);
@@ -744,8 +739,8 @@ void goolDisasm::getOperandFormat(char *instString, unsigned char opcode, long *
     }
     else
     {
-      unsigned short dst = operandBuffer[0];
-      unsigned short src = operandBuffer[1];
+      unsigned short dst = (unsigned short) operandBuffer[0];
+      unsigned short src = (unsigned short) operandBuffer[1];
        
       getAddrFormat(dBuf, dst, 0);
       getAddrFormat(sBuf, src, 0); 
@@ -782,7 +777,7 @@ void goolDisasm::getOperandFormat(char *instString, unsigned char opcode, bool l
 
 void goolDisasm::disassemble(char output[][MAX_CODELINE])
 {
-  char temp[80];
+  // char temp[80];
   int index = 0;
   pc = 0;
   while (!lastInstruction())

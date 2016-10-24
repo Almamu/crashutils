@@ -39,24 +39,24 @@ unsigned long crashSystemTime()
   global->postMessage(CSM_TIME, (param)&csmtime);
   return csmtime;
 }
-void crashSystemZoneWorldModels(entry *zone)
+void crashSystemZoneWorldModels()
 {
-  global->postMessage(CSM_ZONE_WORLD_MODELS, (param)zone);
+  global->postMessage(CSM_ZONE_WORLD_MODELS, (param)currentZone);
 }
-void crashSystemObjectModel(entry *svtx, int frame,
+void crashSystemObjectModel(entry *svtx, unsigned long frame,
                            cvector *trans, cangle *rot, cvector *scale,
                            cslightmatrix *light, cscolormatrix *color, cscolor *back, cscolor *backIntensity)
 {
   param_cmodel_obj params = { svtx, frame, trans, rot, scale, light, color, back, backIntensity };
   global->postMessage(CSM_GFX_OBJMODEL, (param)&params);
 }
-void crashSystemSpriteModel(unsigned long texEID, unsigned char *texInfoArray, int scale, cvector *trans)
+void crashSystemSpriteModel(unsigned long texEID, unsigned char *texInfoArray, unsigned long scale, cvector *trans)
 {
   param_cmodel_spr params = { texEID, texInfoArray, scale, trans };
   global->postMessage(CSM_GFX_SPRMODEL, (param)&params);
 }
-void crashSystemFragmentModel(unsigned long texEID, int quadCount, csquad *quads,
-                             unsigned char *texInfoArray, int scale, cvector *trans)
+void crashSystemFragmentModel(unsigned long texEID, unsigned long quadCount, csquad *quads,
+                             unsigned char *texInfoArray, unsigned long scale, cvector *trans)
 {
   param_cmodel_frg params = { texEID, quadCount, quads, texInfoArray, scale, trans };
   global->postMessage(CSM_GFX_FRGMODEL, (param)&params);

@@ -20,15 +20,15 @@ void MulMatrix(csmatrix *left, csmatrix *right)
 
 void ScaleMatrix(csmatrix *left, cvector *right)
 {
-  left->V1.X = (left->V1.X * right->X) >> 12;
-  left->V2.X = (left->V2.X * right->X) >> 12;
-  left->V3.X = (left->V3.X * right->X) >> 12;
-  left->V1.Y = (left->V1.Y * right->Y) >> 12;
-  left->V2.Y = (left->V2.Y * right->Y) >> 12;
-  left->V3.Y = (left->V3.Y * right->Y) >> 12;
-  left->V1.Z = (left->V1.Z * right->Z) >> 12;
-  left->V2.Z = (left->V2.Z * right->Z) >> 12;
-  left->V3.Z = (left->V3.Z * right->Z) >> 12;
+  left->V1.X = (signed short) ((left->V1.X * right->X) >> 12);
+  left->V2.X = (signed short) ((left->V2.X * right->X) >> 12);
+  left->V3.X = (signed short) ((left->V3.X * right->X) >> 12);
+  left->V1.Y = (signed short) ((left->V1.Y * right->Y) >> 12);
+  left->V2.Y = (signed short) ((left->V2.Y * right->Y) >> 12);
+  left->V3.Y = (signed short) ((left->V3.Y * right->Y) >> 12);
+  left->V1.Z = (signed short) ((left->V1.Z * right->Z) >> 12);
+  left->V2.Z = (signed short) ((left->V2.Z * right->Z) >> 12);
+  left->V3.Z = (signed short) ((left->V3.Z * right->Z) >> 12);
 }
 
 void transform(cvector *input, cvector *trans, cangle *rot, cvector *scale, cvector *output)
@@ -87,16 +87,16 @@ void transform(cvector *input, cvector *trans, cangle *rot, cvector *scale, cvec
   
   //first convert from crash angle to normal angle representation, then back to fixed pt
   //we could have also used sine/cos tables like the game
-  float rotX = CTGA(rot->X);
-  float rotY = CTGA(rot->Y);
-  float rotZ = CTGA(rot->Z);
+  float rotX = (float) CTGA(rot->X);
+  float rotY = (float) CTGA(rot->Y);
+  float rotZ = (float) CTGA(rot->Z);
   
-  signed short sinrotX = FLOAT2FIXED(sin(rotX));
-  signed short cosrotX = FLOAT2FIXED(cos(rotX));
-  signed short sinrotY = FLOAT2FIXED(sin(rotY));
-  signed short cosrotY = FLOAT2FIXED(cos(rotY));
-  signed short sinrotZ = FLOAT2FIXED(sin(rotZ));
-  signed short cosrotZ = FLOAT2FIXED(cos(rotZ));
+  signed short sinrotX = (signed short) FLOAT2FIXED(sin(rotX));
+  signed short cosrotX = (signed short) FLOAT2FIXED(cos(rotX));
+  signed short sinrotY = (signed short) FLOAT2FIXED(sin(rotY));
+  signed short cosrotY = (signed short) FLOAT2FIXED(cos(rotY));
+  signed short sinrotZ = (signed short) FLOAT2FIXED(sin(rotZ));
+  signed short cosrotZ = (signed short)FLOAT2FIXED(cos(rotZ));
   
   csmatrix matA;   //appears here as the transpose of the actual matrix
   matA.V1 = { cosrotZ,      0,  sinrotZ };
@@ -152,6 +152,8 @@ void transform(cvector *input, csmatrix *matrix, cvector *output)
 
 unsigned long apxDist(cvector *vectA, cvector *vectB)
 {
+	if (vectA == nullptr) return 0;
+
   long distX = vectA->X - vectB->X;
   if (distX < 0) { distX = vectB->X - vectA->X; }
   long distY = vectA->Y - vectB->Y;
@@ -193,7 +195,7 @@ unsigned long eucDist(cvector *vectA, cvector *vectB)
                   (diffYf * diffYf) + 
                   (diffZf * diffZf);
                         
-  float magnitude = sqrt(squared);
+  float magnitude = (float) sqrt(squared);
   
   return CTCVC(FLOAT2FIXED(magnitude));
 }
@@ -209,7 +211,7 @@ unsigned long eucDistXZ(cvector *vectA, cvector *vectB)
   float squared = (diffXf * diffXf) + 
                   (diffZf * diffZf);
                         
-  float magnitude = sqrt(squared);
+  float magnitude = (float) sqrt(squared);
   
   return CTCVC(FLOAT2FIXED(magnitude));
 }
@@ -220,7 +222,7 @@ signed long angleXZ(cvector *vectA, cvector *vectB)
   signed long distX = vectB->X - vectA->X;
   signed long distZ = vectB->Z - vectA->Z;
   
-  signed long arctan = atan2(distX, distZ);
+  signed long arctan = (signed long) atan2(distX, distZ);
   
   //we do have to convert back to crash angles if we are using math's atan2
   signed long ang = CTCA(arctan) & 0xFFF;
@@ -234,7 +236,7 @@ signed long angleXY(cvector *vectA, cvector *vectB)
   signed long distX = vectB->X - vectA->X;
   signed long distY = vectB->Y - vectA->Y;
   
-  signed long arctan = atan2(distX, distY);
+  signed long arctan = (signed long) atan2(distX, distY);
     
   //we do have to convert back to crash angles if we are using math's atan2
   signed long ang = CTCA(arctan) & 0xFFF;

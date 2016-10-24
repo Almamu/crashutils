@@ -18,20 +18,20 @@ unsigned long control::readControls()
   unsigned short ctrlBth = 0;
   if (!keys[VK_SHIFT])
   {
-    ctrlBth = (keys['Q']          <<  0)  | 
-              (keys['W']          <<  1)  | 
-              (keys['A']          <<  2)  | 
-              (keys['S']          <<  3)  |
-              (keys['V']          <<  4)  |
-              (keys['C']          <<  5)  |
-              (keys['Z']          <<  6)  |
-              (keys['X']          <<  7)  |
-              (keys['B']          <<  8)  |
+    ctrlBth = (keys['Z']          <<  0)  | 
+              (keys['R']          <<  1)  | 
+              (keys['Q']          <<  2)  | 
+              (keys['E']          <<  3)  |
+              (keys['W']          <<  4)  |
+              (keys['D']          <<  5)  |
+              (keys['S']          <<  6)  |
+              (keys['A']          <<  7)  |
+              (keys[' ']          <<  8)  |
               (keys[VK_RETURN]    << 11)  | 
-              (keys['O']          << 12)  |
-              (keys[VK_SEMICOLON] << 13)  |
-              (keys['L']          << 14)  |
-              (keys['K']          << 15);
+              (keys[VK_UP]          << 12)  |
+              (keys[VK_RIGHT]          << 13)  |
+              (keys[VK_DOWN]          << 14)  |
+              (keys[VK_LEFT]          << 15);
   }
                              
   unsigned long controls = (ctrlBth << 16) | ctrlBth;

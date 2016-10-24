@@ -260,8 +260,8 @@ object *hasPID(object *obj, unsigned long PID);
 
 object *spawnObject(entry *entityEntry, int entityIndex);
 object *addObject(object *parent, unsigned long levelListIndex, unsigned long subIDIndex, unsigned long count, unsigned long *args, bool flag);
-bool terminateObject(object *obj);
-bool terminateObject(object *obj, bool termEvent);  //for a processes entire 'family', set all links to refer to the initial process [by parent field] and its children [link field
+int terminateObject(object *obj);
+int terminateObject(object *obj, bool termEvent);  //for a processes entire 'family', set all links to refer to the initial process [by parent field] and its children [link field
 unsigned long terminateZoneObject(object *obj, entry *zone);
 
 unsigned long issueEvent(object *sender, object *recipient, unsigned long tag, unsigned long count, unsigned long *args);

@@ -158,9 +158,9 @@ void zone::loadCollisions(entry *zdat)
 {
   unsigned char *item2 = zdat->itemData[1];
   
-  unsigned long zoneW = getWord(item2, 0xC, true);
-  unsigned long zoneH = getWord(item2, 0x10, true);
-  unsigned long zoneD = getWord(item2, 0x14, true);
+  unsigned short zoneW = (unsigned short) getWord(item2, 0xC, true);
+  unsigned short zoneH = (unsigned short) getWord(item2, 0x10, true);
+  unsigned short zoneD = (unsigned short) getWord(item2, 0x14, true);
   
   unsigned short rootNode = getHword(item2, 0x1C, true);
 

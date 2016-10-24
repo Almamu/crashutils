@@ -13,6 +13,49 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{cbae5de0-1aed-4618-b717-05dafdce6dc6}</UniqueIdentifier>
+      <Extensions>txt;png</Extensions>
+    </Filter>
+    <Filter Include="Documentation\crash">
+      <UniqueIdentifier>{52ad347a-43db-49f0-a0c4-9569932857cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_formats">
+      <UniqueIdentifier>{48ee5db1-70d6-4a66-aaa9-136ce1ebfc32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo">
+      <UniqueIdentifier>{ae9842f3-d78d-4c42-b8aa-e4d9be585db5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\audio">
+      <UniqueIdentifier>{d734017e-5208-48f5-bf90-a281a2fbe08b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\engine">
+      <UniqueIdentifier>{d3c06802-4f94-46a4-a699-36d63f9d7b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\gool">
+      <UniqueIdentifier>{6102e895-15f6-4b39-a757-b028f1da1344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\init">
+      <UniqueIdentifier>{4f36e47c-ab36-4cd4-a81a-02b861c592b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\misc">
+      <UniqueIdentifier>{d2a8aef6-c436-4749-b625-b3fa7537e489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\pagesys">
+      <UniqueIdentifier>{c0b59343-fdba-4acc-8f2f-b09e7370b5e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\subsystems">
+      <UniqueIdentifier>{2e8184c4-8a41-4ea7-8901-a4476272997e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\video">
+      <UniqueIdentifier>{b11e5a6b-3094-4200-b438-a3a1d8353a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\gool\code">
+      <UniqueIdentifier>{60a2ebd3-90c8-4782-8f12-85af7b92e11a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\crash\crash_pseudo\video\misc">
+      <UniqueIdentifier>{24578cf1-3deb-4c67-9f16-b546387fbe67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\console_system.cpp">
@@ -296,5 +339,246 @@
     <ClInclude Include="..\..\src\crash\src\objectengine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\doc\editor.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+    <Text Include="..\..\doc\gfxapi.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+    <Text Include="..\..\doc\rationale.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+    <Text Include="..\..\doc\refactor.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+    <Text Include="..\..\doc\requirements.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+    <Text Include="..\..\doc\sysinteg.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+    <Text Include="..\..\doc\crashpc.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\disasm_guide.txt">
+      <Filter>Documentation\crash</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\engines_guide.txt">
+      <Filter>Documentation\crash</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_formats\T1ENTRIES.txt">
+      <Filter>Documentation\crash\crash_formats</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_formats\T2ENTRIES.txt">
+      <Filter>Documentation\crash\crash_formats</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_formats\T3ENTRIES.txt">
+      <Filter>Documentation\crash\crash_formats</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_formats\T4ENTRIES.txt">
+      <Filter>Documentation\crash\crash_formats</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_formats\T7ENTRIES.txt">
+      <Filter>Documentation\crash\crash_formats</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_formats\T11ENTRIES.txt">
+      <Filter>Documentation\crash\crash_formats</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_formats\T17ENTRIES.txt">
+      <Filter>Documentation\crash\crash_formats</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\README.txt">
+      <Filter>Documentation\crash\crash_pseudo</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\subroutinedescs.txt">
+      <Filter>Documentation\crash\crash_pseudo</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\titlesandmap.txt">
+      <Filter>Documentation\crash\crash_pseudo</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\coordinates.txt">
+      <Filter>Documentation\crash\crash_pseudo</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\flow.txt">
+      <Filter>Documentation\crash\crash_pseudo</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\main.txt">
+      <Filter>Documentation\crash\crash_pseudo</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\memorymap.txt">
+      <Filter>Documentation\crash\crash_pseudo</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\protodiffs.txt">
+      <Filter>Documentation\crash\crash_pseudo</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\audio\spuroutines.txt">
+      <Filter>Documentation\crash\crash_pseudo\audio</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\engine\objectprocessmgmt.txt">
+      <Filter>Documentation\crash\crash_pseudo\engine</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\engine\cameraengine.txt">
+      <Filter>Documentation\crash\crash_pseudo\engine</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\engine\levelengine.txt">
+      <Filter>Documentation\crash\crash_pseudo\engine</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\engine\object.txt">
+      <Filter>Documentation\crash\crash_pseudo\engine</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\engine\objectengine.txt">
+      <Filter>Documentation\crash\crash_pseudo\engine</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\gool.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type24.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type26.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type28updated.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type35.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type130.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type131updated.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type132updated.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type133.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type134.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type135,144.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type136,137.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type138,145.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type139.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type140.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type141.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type142.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type142funcs.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\type143.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\code\boxtypes.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool\code</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\code\crab.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool\code</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\code\crash.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool\code</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\code\crashtypes.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool\code</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\code\fruit.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool\code</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\code\aku.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool\code</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\code\box.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool\code</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\gool\code\boxfields.txt">
+      <Filter>Documentation\crash\crash_pseudo\gool\code</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\init\gpuinit.txt">
+      <Filter>Documentation\crash\crash_pseudo\init</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\init\mischwinit.txt">
+      <Filter>Documentation\crash\crash_pseudo\init</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\init\gameinit.txt">
+      <Filter>Documentation\crash\crash_pseudo\init</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\misc\string.txt">
+      <Filter>Documentation\crash\crash_pseudo\misc</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\misc\sync.txt">
+      <Filter>Documentation\crash\crash_pseudo\misc</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\pagesys\sub_8001495C.txt">
+      <Filter>Documentation\crash\crash_pseudo\pagesys</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\pagesys\texturepaging.txt">
+      <Filter>Documentation\crash\crash_pseudo\pagesys</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\pagesys\pagesys.txt">
+      <Filter>Documentation\crash\crash_pseudo\pagesys</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\pagesys\pagesysInit15B58.txt">
+      <Filter>Documentation\crash\crash_pseudo\pagesys</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\pagesys\sub_800145c8.txt">
+      <Filter>Documentation\crash\crash_pseudo\pagesys</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\subsystems\initA.txt">
+      <Filter>Documentation\crash\crash_pseudo\subsystems</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\subsystems\initB.txt">
+      <Filter>Documentation\crash\crash_pseudo\subsystems</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\subsystems\entry.txt">
+      <Filter>Documentation\crash\crash_pseudo\subsystems</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\video\build_cam_matrices.txt">
+      <Filter>Documentation\crash\crash_pseudo\video</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\video\gpu.txt">
+      <Filter>Documentation\crash\crash_pseudo\video</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\video\object2gte(light&amp;rot).txt">
+      <Filter>Documentation\crash\crash_pseudo\video</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\video\object2gte.txt">
+      <Filter>Documentation\crash\crash_pseudo\video</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\video\text_prim.txt">
+      <Filter>Documentation\crash\crash_pseudo\video</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\video\world2gte.txt">
+      <Filter>Documentation\crash\crash_pseudo\video</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\video\zoneworlds2gte.txt">
+      <Filter>Documentation\crash\crash_pseudo\video</Filter>
+    </Text>
+    <Text Include="..\..\doc\crash\crash_pseudo\video\misc\2EC68 LEVEL TO JUMPTABLE CASES.txt">
+      <Filter>Documentation\crash\crash_pseudo\video\misc</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\doc\uml.png">
+      <Filter>Documentation</Filter>
+    </Image>
   </ItemGroup>
 </Project>

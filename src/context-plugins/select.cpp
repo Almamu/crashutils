@@ -148,7 +148,7 @@ void context_plugin_select::recordSelectable(dpoint loc, int type, int index, in
 
   int drwX = (int)coords.X;
   int drwY = (int)coords.Y;
-  int priority = (int)coords.Z * 16;
+  unsigned long priority = (unsigned long) (coords.Z * 16);
   
   if (drwX >= 0 && drwX < contextWidth &&
       drwY >= 0 && drwY < contextHeight)

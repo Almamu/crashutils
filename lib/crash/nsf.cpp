@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
 #include "nsf.h"
 #include "r3000a.h"
@@ -79,7 +80,10 @@ unsigned char *NSF::readChunkData()
 
 long decompressChunk(unsigned char *output, const unsigned char *input, chunkcmprHeader header)
 {
-  unsigned short length = header.length;
+	// some range checking to prevent weird behaviour
+	assert(header.length < USHRT_MAX);
+
+  unsigned short length = (unsigned short) header.length;
   unsigned char span = 0;  
   unsigned char prefix = 0; 
   unsigned short seek = 0;
@@ -146,7 +150,7 @@ chunk *NSF::lookupChunk(unsigned long CID)
 int NSF::lookupEntryIndex(unsigned long EID, unsigned long CID)
 {
   chunk *entryChunk = lookupChunk(CID);
-  for (int count=0; count < entryChunk->entryCount; count++)
+  for (unsigned long count=0; count < entryChunk->entryCount; count++)
   {
     if (entryChunk->entries[count].EID == EID)
 	  return count;
@@ -158,7 +162,7 @@ int NSF::lookupEntryIndex(unsigned long EID, unsigned long CID)
 entry *NSF::lookupEntry(unsigned long EID, unsigned long CID)
 {
   chunk *entryChunk = lookupChunk(CID);
-  for (int count=0; count < entryChunk->entryCount; count++)
+  for (unsigned long count=0; count < entryChunk->entryCount; count++)
   {
     if (entryChunk->entries[count].EID == EID)
 	  return &entryChunk->entries[count];
@@ -172,7 +176,7 @@ int NSF::lookupEntryIndex(unsigned long EID, int chunkIndex)
 {
   chunk *entryChunk = &chunks[chunkIndex];
   
-  for (int count=0; count < entryChunk->entryCount; count++)
+  for (unsigned long count=0; count < entryChunk->entryCount; count++)
   {
     if (entryChunk->entries[count].EID == EID)
 	  return count;
@@ -184,7 +188,7 @@ int NSF::lookupEntryIndex(unsigned long EID, int chunkIndex)
 entry *NSF::lookupEntry(unsigned long EID, int chunkIndex)
 {
   chunk *entryChunk = &chunks[chunkIndex];
-  for (int count=0; count < entryChunk->entryCount; count++)
+  for (unsigned long count=0; count < entryChunk->entryCount; count++)
   {
     if (entryChunk->entries[count].EID == EID)
 	  return &entryChunk->entries[count];
@@ -245,7 +249,7 @@ void NSF::buildLists()
     
     if (type == 0)
     {
-      for (int count2=0; count2 < chunks[count].entryCount; count2++)
+      for (unsigned long count2=0; count2 < chunks[count].entryCount; count2++)
       {
         entry *curEntry = &chunks[count].entries[count2];
         if (!curEntry)

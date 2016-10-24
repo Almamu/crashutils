@@ -32,7 +32,7 @@ void context_plugin_zone_select::onRender()
   NSD *nsd; NSF *nsf; 
   contextScene->getNSDNSF(nsd, nsf);
   
-  for (int lp=0; lp<nsf->entryCount[7]; lp++)
+  for (unsigned long lp=0; lp<nsf->entryCount[7]; lp++)
   {
     entry *zone = nsf->entries[7][lp];
     unsigned char *zoneCollision = zone->itemData[1];

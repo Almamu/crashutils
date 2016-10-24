@@ -43,7 +43,7 @@ int entryList::occupy()
 	        if (nsf->chunks[curChunk].type == 0)  //TODO: define consts for chunk types
 	        {
 		        char entryString[0x10] = "";
-		        for (int curEntry = 0; curEntry < nsf->chunks[curChunk].entryCount; curEntry++)
+		        for (unsigned long curEntry = 0; curEntry < nsf->chunks[curChunk].entryCount; curEntry++)
             {
               char eidString[6];
               getEIDstring(eidString, nsf->chunks[curChunk].entries[curEntry].EID);

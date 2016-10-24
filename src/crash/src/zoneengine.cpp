@@ -1,6 +1,7 @@
 #include "zoneengine.h"
 
 #include "../crash_system.h"
+#include <assert.h>
 
 extern NSD *nsd;
 
@@ -53,11 +54,13 @@ unsigned long initLevel()
     
     //levelID = *(0x5C53C)[4];   //also have NSD record extended info
     unsigned long levelID = nsd->level.LID;
+
+	assert(levelID < USHRT_MAX);
     
-    loadStates(levelID);     //and write function for this: set up process bitlist array
+    loadStates((unsigned short) levelID);     //and write function for this: set up process bitlist array
 
     unsigned long initProgress = 0;
-    unsigned long zoneEntryAddBit;
+    // unsigned long zoneEntryAddBit;
     
     /*dont need this right now
     curLevel = *(0x5C52C);
@@ -145,7 +148,7 @@ void initZone(entry *zdat)
   
   if (sectionCount > 0)
   { 
-    for (int section = 0; section < sectionCount; section++)
+    for (unsigned long section = 0; section < sectionCount; section++)
     {
       unsigned long sectionIndex = collisionSkip + section;
       unsigned char *zoneSection = zdat->itemData[sectionIndex];
@@ -158,7 +161,7 @@ void initZone(entry *zdat)
   
   if (entityCount > 0)
   {    
-    for (int entity = 0; entity < entityCount; entity++)
+    for (unsigned long entity = 0; entity < entityCount; entity++)
     {
       unsigned long entityIndex = collisionSkip + sectionCount + entity;
       unsigned char *zoneEntity = zdat->itemData[entityIndex];
@@ -296,19 +299,19 @@ void updateLevel(entry *zone, unsigned char *section, signed long progressV, uns
         oldZoneHeader                = currentZone->itemData[0];
         unsigned char *newZoneHeader = zone->itemData[0];
         
-        processPages = (flags & 2);  
+		processPages = (flags & 2) == 2;
 
         unsigned long oldNeighborCount = getWord(oldZoneHeader, 0x210, true);     //count of neighboring Zdat entrys? including itself?
         unsigned long newNeighborCount = getWord(newZoneHeader, 0x210, true); 
 
-        for (int countA = 0; countA < oldNeighborCount; countA++)
+        for (unsigned long countA = 0; countA < oldNeighborCount; countA++)
         {
           //oldNeighborZone = EID_PROCESS(getWord(oldZoneHeader, 0x214+(countA*4), true));   //
           unsigned long EID       = getWord(oldZoneHeader, 0x214 + (countA*4), true);
           entry *oldNeighborZone  = crashSystemPage(EID);
           
           bool match = false;
-          for (int countB = 0; countB < newNeighborCount; countB++)
+          for (unsigned long countB = 0; countB < newNeighborCount; countB++)
           {
             //entry *newNeighborZone = EID_PROCESS(getWord(newZoneHeader, 0x214+(countB*4), true);
             EID                    = getWord(newZoneHeader, 0x214 + (countB*4), true);
@@ -330,7 +333,7 @@ void updateLevel(entry *zone, unsigned char *section, signed long progressV, uns
             if (zoneFlags & 1)
             {
               //sub_8001D200(oldNeighborZone);  //remove it from the system
-              setWord(oldNeighbHeader, 0x2DC, true, zoneFlags & 0xFFFFFFFC); //clear bits 1 & 2
+              setWord(oldNeighbHeader, 0x2DC, zoneFlags & 0xFFFFFFFC, true); //clear bits 1 & 2
             }
           }
         }
@@ -377,7 +380,7 @@ void updateLevel(entry *zone, unsigned char *section, signed long progressV, uns
       unsigned long neighborCount = getWord(zoneHeader, 0x210, true);
       
       unsigned char *neighborHeader;
-      for (int count = 0; count < neighborCount; count++)
+      for (unsigned long count = 0; count < neighborCount; count++)
       {
         //neighborZone              = EID_PROCESS(neighborEID);    
         unsigned long EID       = getWord(zoneHeader, 0x214 + (count*4), true);
@@ -391,13 +394,13 @@ void updateLevel(entry *zone, unsigned char *section, signed long progressV, uns
 
           var_61A60 = 0x19000;
 
-          setWord(neighborHeader, 0x2DC, true, getWord(neighborHeader, 0x2DC, true) | 3);  //set bits 1 & 2
+          setWord(neighborHeader, 0x2DC, getWord(neighborHeader, 0x2DC, true) | 3, true);  //set bits 1 & 2
         }             
         
         if (processPages)
-          setWord(neighborHeader, 0x2DC, true, getWord(neighborHeader, 0x2DC, true) | 4);  //set bit 3
+          setWord(neighborHeader, 0x2DC, getWord(neighborHeader, 0x2DC, true) | 4, true);  //set bit 3
         else
-          setWord(neighborHeader, 0x2DC, true, getWord(neighborHeader, 0x2DC, true) & 3); //clear bit 3
+          setWord(neighborHeader, 0x2DC, getWord(neighborHeader, 0x2DC, true) & 3, true); //clear bit 3
       }
           
       //use this function on the last neighbor

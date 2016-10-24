@@ -44,7 +44,7 @@ class mdi_window : public basic_window
 
   bool TranslateMDISysAccel(LPMSG msg)
   {
-    return ::TranslateMDISysAccel(hSelf, msg);
+    return ::TranslateMDISysAccel(hSelf, msg) != false;
   }
   
   WPARAM messageLoop();

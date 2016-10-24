@@ -99,7 +99,7 @@ unsigned long cameraCalculate(unsigned char *section, signed long progressV, cca
   unsigned long neighbSectionCount = getHword(section, 0x8, true);
   if ((progress == sectionDepth) && (fractional != 0) && (neighbSectionCount != 0))
   {
-    for (int count = 0; count < neighbSectionCount; count++)
+    for (unsigned long count = 0; count < neighbSectionCount; count++)
     {
       if (section[0xC + (count*4)] & 2)
       {
@@ -251,7 +251,7 @@ bool cameraUpdate()
         bool stopTransition = false;
         if  (controls[0].tapState & 0xF0)
         {
-          if (zoneFlags & 0x810000 == 0) { stopTransition = true; }
+          if ((zoneFlags & 0x810000) == 0) { stopTransition = true; }
         }
           
         unsigned short sectionDepth = getHword(currentSection, 0x1E, true);
@@ -264,7 +264,7 @@ bool cameraUpdate()
           //unless we add 1
           unsigned long currentProgress = (currentProgressV >> 8) + 1;
           
-          if (zoneFlags & 0x1000 == 0) { globals[0x11] = 0; }  //0x618D0
+          if ((zoneFlags & 0x1000) == 0) { globals[0x11] = 0; }  //0x618D0
 
           //if the transition hasn't reached the end of the camera path
           //and the transition isn't scheduled to stop, then continue automatically incrementing
@@ -642,11 +642,11 @@ void cameraFollow(object *obj, bool flag)
   unsigned long progressFlags = 0;
   
   //if at less than halfway but max of 0x32 into section
-  if (progress < (sectionDepth/2)  || progress < 0x32)
+  if (progress < (unsigned short) (sectionDepth / 2)  || progress < 0x32)
     progressFlags |= 1;
   
   //if at more than halfway but max of 0x32 from end of section
-  if (progress >= (sectionDepth/2) || ((sectionDepth/2)-progress) < 0x32)
+  if (progress >= (unsigned short) (sectionDepth / 2) || ((unsigned short) (sectionDepth / 2)-progress) < 0x32)
     progressFlags |= 2;
     
   unsigned char *zoneHeader = currentZone->itemData[0];
@@ -778,7 +778,7 @@ void cameraFollow(object *obj, bool flag)
   
   //for each neighboring section to the current section
   unsigned long neighbSectionCount = getWord(currentSection, 8, true);
-  for (int count = 0; count < neighbSectionCount; count++)
+  for (unsigned long count = 0; count < neighbSectionCount; count++)
   { 
     unsigned long offset = count*4; 
     
@@ -843,7 +843,7 @@ void cameraFollow(object *obj, bool flag)
   //and we are at least more than 10 units from either end of the section  
   if (progScaleZ != 0 && 
       progress >= 11 &&
-      progress < (sectionDepth-10))
+      progress < (unsigned short) (sectionDepth - 10))
   {
     //if its not the current section
     if (curNoDetZ)              
@@ -900,9 +900,9 @@ void cameraFollow(object *obj, bool flag)
   else*/
   {
     
-    unsigned long objX = obj->process.vectors.trans.X;
-    unsigned long objY = obj->process.vectors.trans.Y;
-    unsigned long objZ = obj->process.vectors.trans.Z;
+    signed long objX = obj->process.vectors.trans.X;
+	signed long objY = obj->process.vectors.trans.Y;
+	signed long objZ = obj->process.vectors.trans.Z;
         
     cvector objTrans = { objX+panX,objY+panY,objZ+totalZoomZ};
     
@@ -929,7 +929,7 @@ void cameraFollow(object *obj, bool flag)
   }
   
   bool sameDirection = false;
-  for (int count = 0; count < neighbSectionCount; count++)
+  for (unsigned long count = 0; count < neighbSectionCount; count++)
   { 
     unsigned long offset = count*4; //neighbor section = 4 byte tag
 
@@ -995,9 +995,9 @@ void cameraFollow(object *obj, bool flag)
       }
       else*/
       {
-        unsigned long objX = obj->process.vectors.trans.X;
-        unsigned long objY = obj->process.vectors.trans.Y;
-        unsigned long objZ = obj->process.vectors.trans.Z;
+		signed long objX = obj->process.vectors.trans.X;
+		signed long objY = obj->process.vectors.trans.Y;
+        signed long objZ = obj->process.vectors.trans.Z;
         
         cvector objTrans = { objX+panX,objY+panY,objZ+totalZoomZ};
 
@@ -1078,7 +1078,7 @@ void cameraFollow(object *obj, bool flag)
   unsigned long closestDist = 0x7FFFFFFF; //largest pos
   
   ccameraInfo *sigCam = &sectionCamera[0];
-  for (int count = 0; count < curCam; count++)
+  for (unsigned long count = 0; count < curCam; count++)
   { 
     unsigned char *section = sectionCamera[count].curSection;
     
@@ -1381,7 +1381,7 @@ bool cameraGetProgress(cvector *trans, unsigned char *section, ccameraInfo *cam,
   cam->progressV = progressV;
   
   //and calculate euclidian distance from crash to camera
-  unsigned long dist = sqrt((distX * distX) + (distY * distY) + (distZ * distZ));
+  unsigned long dist = (unsigned long) sqrt((distX * distX) + (distY * distY) + (distZ * distZ));
   cam->dist = dist;
   
   return true;
@@ -1408,14 +1408,14 @@ bool cameraGetProgressAlt(cvector *trans, unsigned char *section, ccameraInfo *c
   //find the closest camera path node to the player; its index is the calculated progress
   if (sectionDepth >= 0)
   {
-    unsigned long count   = 0;
+    signed long count   = 0;
     
     signed long prevFovLen      = 0;
     unsigned long prevAbsFovLen = 0;
     
     do
     {
-      unsigned long offset = (count*12);
+      unsigned long offset = (count * 12);
     
       unsigned long transX = trans->X >> 8;
       unsigned long transZ = trans->Z >> 8;
@@ -1538,8 +1538,8 @@ bool cameraGetProgressAlt(cvector *trans, unsigned char *section, ccameraInfo *c
     
   signed long progress = progressV >> 8;
   
-  unsigned long sectionStart = sectionStartCut;
-  unsigned long sectionEnd   = sectionDepth - sectionEndCut;
+  signed long sectionStart = sectionStartCut;
+  signed long sectionEnd   = sectionDepth - sectionEndCut;
   
   if (progress < sectionStart)
   {
@@ -1577,7 +1577,7 @@ bool cameraGetProgressAlt(cvector *trans, unsigned char *section, ccameraInfo *c
   cam->curSection = section;
   cam->progressV  = progressV;
   
-  unsigned long dist = sqrt((distX * distX) + (distY * distY) + (distZ * distZ));
+  unsigned long dist = (unsigned long) sqrt((distX * distX) + (distY * distY) + (distZ * distZ));
   
   cam->dist = dist;
   

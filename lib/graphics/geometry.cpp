@@ -100,7 +100,7 @@ model_wld *geometry::getWorld(entry *wgeo)
   unsigned long cacheIndex = (EID >> 15) & 0xFF; 
   
   int newIndex = 0;
-  for (int lp = cacheIndex; lp < cacheIndex+0x100; lp++)
+  for (unsigned long lp = cacheIndex; lp < cacheIndex+0x100; lp++)
   {
     newIndex = lp % 0x100;
     if (worldCache[newIndex].EID == EID_NONE)
@@ -132,7 +132,7 @@ model_obj *geometry::getObject(entry *svtx, int frame)
   unsigned long cacheIndex = (EID >> 15) & 0xFF; 
   
   int newIndex = 0;
-  for (int lp = cacheIndex; lp < cacheIndex+0x100; lp++)
+  for (unsigned long lp = cacheIndex; lp < cacheIndex+0x100; lp++)
   {
     newIndex = lp % 0x100;
     if (( objectCache[newIndex].EID == EID_NONE || 
@@ -192,7 +192,7 @@ model_spr *geometry::getSprite(unsigned long texEID, unsigned char *texInfoArray
   unsigned long cacheIndex = texEntry.coords & 0xFF;
   
   int newIndex = 0;
-  for (int lp = cacheIndex; lp < cacheIndex+0x100; lp++)
+  for (unsigned long lp = cacheIndex; lp < cacheIndex+0x100; lp++)
   {
     newIndex = lp % 0x100;
         
@@ -271,7 +271,7 @@ model_frg *geometry::getFragment(unsigned long texEID, int quadCount, squad2 *qu
   unsigned long cacheIndex = texEntry.coords & 0xFF;
   
   int newIndex = 0;
-  for (int lp = cacheIndex; lp < cacheIndex+0x100; lp++)
+  for (unsigned long lp = cacheIndex; lp < cacheIndex+0x100; lp++)
   {
     newIndex = lp % 0x100;
         

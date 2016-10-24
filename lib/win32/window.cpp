@@ -69,7 +69,7 @@ window *window::getChild(int index)
     int _index = 0;
     while (_index != index)
     {      
-      if (!(child = child->sibling));
+      if (!(child = child->sibling))
         return 0;
         
       _index++;
@@ -87,7 +87,7 @@ window *window::getChild(HWND hwnd)
   {
     while (child->hSelf != hwnd)
     {      
-      if (!(child = child->sibling));
+      if (!(child = child->sibling))
         return 0;
     }
   }

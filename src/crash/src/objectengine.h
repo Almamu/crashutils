@@ -10,13 +10,13 @@
 
 #define PI 3.14159265
 
-#define CTCVC(C) (C << 8)
-#define CTGVC(C) (C >> 8)
+#define CTCVC(C) ((C) << 8)
+#define CTGVC(C) ((C) >> 8)
 #define CTCA(A) (signed long)((A * 0x800) / PI)
 #define CTGA(A) (PI * (A / 0x800))
 
-#define FIXED2FLOAT(C) ((float)C / 0x1000)
-#define FLOAT2FIXED(C) (unsigned long)(C * 0x1000)
+#define FIXED2FLOAT(C) ((float)(C) / 0x1000)
+#define FLOAT2FIXED(C) (unsigned long)((C) * 0x1000)
 
 #define cabs(V) ((V < 0) ? -V : V)
 
@@ -86,7 +86,7 @@ unsigned long objectColors(object *obj);
 unsigned long objectPhysics(object *obj, bool flag);
 void getSpace(cvector *location, cbound *bound, cspace *output);
 
-bool isOutOfRange(object *obj, cvector *pointA, cvector *pointB, unsigned long boundW, unsigned long boundH, unsigned long boundD);
+bool isOutOfRange(object *obj, cvector *pointA, cvector *pointB, signed long boundW, signed long boundH, signed long boundD);
 bool isColliding(cpoint *point, cspace *space);
 bool isColliding(cspace *spcA, cspace *spcB);  //sub_80026CA8
 bool isContained(cspace *src, cspace *space);
@@ -108,7 +108,7 @@ void plotObjWalls(cvector *trans, object *obj, traversalInfo *trav, bool flag);
 void plotWall(signed char x, signed char z);
 void plotWallB(signed char x, signed char z);
 unsigned long stopAtWalls(cvector *trans, unsigned long reqMovePtX, unsigned long reqMovePtZ, unsigned long *movePtX, unsigned long *movePtZ, object *obj, unsigned long ret);
-unsigned long replotWalls(bool noClear, bool flags, cvector *trans, object *obj);
+unsigned long replotWalls(bool noClear, int flags, cvector *trans, object *obj);
 signed long findCeil(object *obj, cvector *trans, traversalInfo *trav);
 signed long findAvgY(object *obj, traversalInfo *trav, cspace *nodeSpace, cspace *colliderSpace, unsigned long typeA, unsigned long typeB, signed long defY);
 unsigned long stopAtZone(object *obj, cvector *trans);

@@ -16,15 +16,15 @@
 #include "zone_window/camera_path_window.h"
 
 // window controls
-#define IDC_CONTEXT_OVERHEAD 101
-#define IDC_ZONELIST         102
-#define IDC_GENERALWINDOW    103
-#define IDC_ENTITYWINDOW     110
+#define ZONE_IDC_CONTEXT_OVERHEAD 101
+#define ZONE_IDC_ZONELIST         102
+#define ZONE_IDC_GENERALWINDOW    103
+#define ZONE_IDC_ENTITYWINDOW     110
 
 // window menus
-#define ID_SEPARATOR         201
-#define ID_ENTITY_SPAWN      201
-#define ID_ENTITY_PROPERTIES 202
+#define ZONE_ID_SEPARATOR         201
+#define ZONE_ID_ENTITY_SPAWN      201
+#define ZONE_ID_ENTITY_PROPERTIES 202
 
 class zone_window : public basic_control
 {

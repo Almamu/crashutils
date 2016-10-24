@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include "camera_control.h"
 
 void context_plugin_camera_control::messageRouter(int msg, param lparam, param rparam)
@@ -30,7 +31,7 @@ void context_plugin_camera_control::onHandleKeys(bool *keys)
   {
     if (keys['O'])          { sceneCamera->rotY(-1.0); render = true; }
     if (keys['L'])          { sceneCamera->rotY(1.0);  render = true; }
-    if (keys[VK_SEMICOLON]) { sceneCamera->rotX(1.0);  render = true; }
+	if (keys[';'])          { sceneCamera->rotX(1.0);  render = true; }
     if (keys['K'])          { sceneCamera->rotX(-1.0); render = true; }
                            
     if (keys['A'])          { sceneCamera->move(1.0);  render = true; }

@@ -1798,18 +1798,18 @@ static char* FileDialogItem_ToString(LPPROPGRIDFDITEM lpPgFdItem)
 /// @returns LPITEMIDLIST A pointer to an item id list object.
 static LPITEMIDLIST ConvertPathToLpItemIdList(char* pszPath)
 {
-    LPITEMIDLIST pidl = NULL;
+    /*LPITEMIDLIST pidl = NULL;
     LPSHELLFOLDER pDesktopFolder;
     ULONG chEaten;
     ULONG dwAttributes;
 
-    /*if (SUCCEEDED(SHGetDesktopFolder(&pDesktopFolder)))
+    if (SUCCEEDED(SHGetDesktopFolder(&pDesktopFolder)))
     {
         pDesktopFolder->ParseDisplayName((HWND)pDesktopFolder,
          NULL, pszPath, &chEaten, &pidl, &dwAttributes);
         pDesktopFolder->Release();
     }*/
-    return pidl;
+    return NULL;
 }
 
 /// @brief An application-defined callback function used with the
